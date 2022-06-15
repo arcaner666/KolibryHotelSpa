@@ -18,12 +18,12 @@ public class DpMsPersonClaimDal : IPersonClaimDal
     {
         using var connection = _context.CreateConnection();
         var sql = "INSERT INTO PersonClaim ("
-            + " PersonClaimId,"
+            + " PersonId,"
             + " ClaimId,"
             + " CreatedAt,"
             + " UpdatedAt)"
             + " VALUES("
-            + " @PersonClaimId,"
+            + " @PersonId,"
             + " @ClaimId,"
             + " @CreatedAt,"
             + " @UpdatedAt)"

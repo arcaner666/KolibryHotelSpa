@@ -17,7 +17,6 @@ public class DpMsPersonDal : IPersonDal
     {
         using var connection = _context.CreateConnection();
         var sql = "INSERT INTO Person ("
-            + " UserName,"
             + " Email,"
             + " Phone,"
             + " PasswordHash,"
@@ -29,7 +28,6 @@ public class DpMsPersonDal : IPersonDal
             + " CreatedAt,"
             + " UpdatedAt)"
             + " VALUES("
-            + " @UserName,"
             + " @Email,"
             + " @Phone,"
             + " @PasswordHash,"
@@ -57,7 +55,6 @@ public class DpMsPersonDal : IPersonDal
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
             + " PersonId,"
-            + " UserName,"
             + " Email,"
             + " Phone,"
             + " PasswordHash,"
@@ -78,7 +75,6 @@ public class DpMsPersonDal : IPersonDal
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
             + " PersonId,"
-            + " UserName,"
             + " Email,"
             + " Phone,"
             + " PasswordHash,"
@@ -99,7 +95,6 @@ public class DpMsPersonDal : IPersonDal
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
             + " PersonId,"
-            + " UserName,"
             + " Email,"
             + " Phone,"
             + " PasswordHash,"
@@ -119,7 +114,6 @@ public class DpMsPersonDal : IPersonDal
     {
         using var connection = _context.CreateConnection();
         var sql = "UPDATE Person SET"
-            + " UserName = @UserName,"
             + " Email = @Email,"
             + " Phone = @Phone,"
             + " PasswordHash = @PasswordHash,"

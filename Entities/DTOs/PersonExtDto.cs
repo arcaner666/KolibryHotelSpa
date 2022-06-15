@@ -3,11 +3,8 @@
 public class PersonExtDto
 {
     public long PersonId { get; set; }
-    public string UserName { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string Phone { get; set; } = null!;
-    public byte[] PasswordHash { get; set; } = null!;
-    public byte[] PasswordSalt { get; set; } = null!;
     public string Role { get; set; } = null!;
     public bool Blocked { get; set; }
     public string RefreshToken { get; set; } = null!;
@@ -16,7 +13,7 @@ public class PersonExtDto
     public DateTimeOffset UpdatedAt { get; set; }
 
     // Extended
-    public string Password { get; set; }
+    public string Password { get; set; } = null!;
     public int RefreshTokenDuration { get; set; }
-    public string AccessToken { get; set; }
+    public string AccessToken { get; set; } = null!;
 }

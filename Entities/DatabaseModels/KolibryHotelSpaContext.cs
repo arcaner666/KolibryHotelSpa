@@ -31,7 +31,7 @@ namespace Entities.DatabaseModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=arcaner666\\sqlserver;Database=KolibryHotelSpa;User Id=sa;Password=Candiltos96.;");
+                optionsBuilder.UseSqlServer("Server=work\\sqlserver;Database=KolibryHotelSpa;User Id=sa;Password=Candiltos96.;");
             }
         }
 
@@ -148,8 +148,6 @@ namespace Entities.DatabaseModels
                 entity.Property(e => e.RefreshToken).HasMaxLength(500);
 
                 entity.Property(e => e.Role).HasMaxLength(50);
-
-                entity.Property(e => e.UserName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<PersonClaim>(entity =>

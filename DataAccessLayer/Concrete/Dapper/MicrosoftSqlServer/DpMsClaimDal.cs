@@ -17,9 +17,9 @@ public class DpMsClaimDal : IClaimDal
     {
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
-            + " c.ClaimId,"
-            + " c.Title"
-            + " FROM Claim c";
+            + " ClaimId,"
+            + " Title"
+            + " FROM Claim";
         return connection.Query<Claim>(sql).ToList();
     }
 
@@ -27,10 +27,10 @@ public class DpMsClaimDal : IClaimDal
     {
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
-           + " c.ClaimId,"
-           + " c.Title"
-           + " FROM Claim c"
-           + " WHERE c.Title = @Title";
+           + " ClaimId,"
+           + " Title"
+           + " FROM Claim"
+           + " WHERE Title = @Title";
         return connection.Query<Claim>(sql, new { @Title = title }).SingleOrDefault();
     }
 }

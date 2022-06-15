@@ -11,7 +11,6 @@ namespace Entities.DatabaseModels
         }
 
         public long PersonId { get; set; }
-        public string UserName { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public byte[] PasswordHash { get; set; } = null!;

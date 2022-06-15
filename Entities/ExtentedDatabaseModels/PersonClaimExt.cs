@@ -9,5 +9,5 @@ public class PersonClaimExt
     public DateTimeOffset UpdatedAt { get; set; }
 
     // Extended With Claim
-    public string ClaimTitle { get; set; }
+    public string ClaimTitle { get; set; } = null!;
 }

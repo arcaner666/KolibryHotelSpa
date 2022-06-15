@@ -33,8 +33,6 @@ public class PersonBl : IPersonBl
 
         var addedPerson = _mapper.Map<Person>(personDto);
 
-        addedPerson.UserName = "";
-        addedPerson.Phone = "";
         addedPerson.PasswordHash = passwordHash;
         addedPerson.PasswordSalt = passwordSalt;
         addedPerson.Blocked = false;
@@ -89,7 +87,7 @@ public class PersonBl : IPersonBl
         if (person is null)
             return new ErrorDataResult<PersonDto>(Messages.PersonNotFound);
 
-        person.UserName = personDto.UserName;
+        person.Email = personDto.Email;
         person.Phone = personDto.Phone;
         person.Role = personDto.Role;
         person.Blocked = personDto.Blocked;

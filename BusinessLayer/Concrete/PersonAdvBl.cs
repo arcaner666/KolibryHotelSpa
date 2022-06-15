@@ -108,129 +108,36 @@ public class PersonAdvBl : IPersonAdvBl
         return new SuccessDataResult<PersonExtDto>(personExtDto, Messages.AuthorizationTokensRefreshed);
     }
 
+    // Sadece geliştirme aşamasında açık kalmalı çünkü sisteme kullanıcı ekleme işi kontrollü olacak.
     [TransactionScopeAspect]
+    [ValidationAspect(typeof(PersonExtDtoRegisterValidator))]
     public IResult Register(PersonExtDto personExtDto)
     {
-        //// Yeni bir kişi eklenir.
-        //PersonDto personDto = new()
-        //{
-        //    Email = personExtDto.Email,
-        //    Role = "Employee",
-        //};
-        //var addPersonResult = _personBl.Add(personDto);
-        //if (!addPersonResult.Success) 
-        //    return addPersonResult;
+        PersonDto personDto = new()
+        {
+            Email = personExtDto.Email,
+            Phone = personExtDto.Phone,
+            Role = "Admin",
+            Password = personExtDto.Password,
+        };
+        var addPersonResult = _personBl.Add(personDto);
+        if (!addPersonResult.Success)
+            return addPersonResult;
 
-        //// Yetki adından yetkinin id'si bulunur.
-        //var getClaimResult = _claimBl.GetByTitle("Employee");
-        //if (!getClaimResult.Success) 
-        //    return getClaimResult;
+        var getClaimResult = _claimBl.GetByTitle("Admin");
+        if (!getClaimResult.Success)
+            return getClaimResult;
 
-        //// Personel yetkileri verilir.
-        //SystemUserClaimDto systemUserClaimDto = new()
-        //{
-        //    SystemUserId = addSystemUserResult.Data.SystemUserId,
-        //    OperationClaimId = getOperationClaimResult.Data.OperationClaimId,
-        //};
-        //var addSystemUserClaimResult = _systemUserClaimBl.Add(systemUserClaimDto);
-        //if (!addSystemUserClaimResult.Success) 
-        //    return addSystemUserClaimResult;
+        PersonClaimDto personClaimDto = new()
+        {
+            PersonId = addPersonResult.Data.PersonId,
+            ClaimId = getClaimResult.Data.ClaimId,
+        };
+        var addPersonClaimResult = _personClaimBl.Add(personClaimDto);
+        if (!addPersonClaimResult.Success)
+            return addPersonClaimResult;
 
-        //// Yeni bir işletme eklenir.
-        //BusinessDto businessDto = new()
-        //{
-        //    OwnerSystemUserId = addSystemUserResult.Data.SystemUserId,
-        //    BusinessName = registerSectionManagerDto.BusinessName,
-        //};
-        //var addBusinessResult = _businessBl.Add(businessDto);
-        //if (!addBusinessResult.Success) 
-        //    return addBusinessResult;
-
-        //// İşletmenin merkez şubesinin adresi eklenir.
-        //FullAddressDto fullAddressDto = new()
-        //{
-        //    CityId = registerSectionManagerDto.CityId,
-        //    DistrictId = registerSectionManagerDto.DistrictId,
-        //    AddressTitle = "Merkez",
-        //    PostalCode = 0,
-        //    AddressText = registerSectionManagerDto.AddressText,
-        //};
-        //var addFullAddressResult = _fullAddressBl.Add(fullAddressDto);
-        //if (!addFullAddressResult.Success) 
-        //    return addFullAddressResult;
-
-        //// İşletmenin merkez şubesi eklenir.
-        //BranchDto branchDto = new()
-        //{
-        //    BusinessId = addBusinessResult.Data.BusinessId,
-        //    FullAddressId = addFullAddressResult.Data.FullAddressId,
-        //    BranchOrder = 1,
-        //    BranchName = "Merkez",
-        //    BranchCode = "000001",
-        //};
-        //var addBranchResult = _branchBl.Add(branchDto);
-        //if (!addBranchResult.Success) 
-        //    return addBranchResult;
-
-        //// Kullanıcı kaydındaki işletme ve şube id'leri güncellenir.
-        //addSystemUserResult.Data.BusinessId = addBusinessResult.Data.BusinessId;
-        //addSystemUserResult.Data.BranchId = addBranchResult.Data.BranchId;
-        //var updateSystemUserResult = _personBl.Update(addSystemUserResult.Data);
-        //if (!updateSystemUserResult.Success) 
-        //    return updateSystemUserResult;
-
-        //// Kasanın doviz cinsi getirilir.
-        //var getCurrencyResult = _currencyBl.GetByCurrencyName("TL");
-        //if (!getCurrencyResult.Success)
-        //    return getCurrencyResult;
-
-        //// İşletmenin kasası oluşturulur.
-        //CashExtDto cashExtDto = new()
-        //{
-        //    BusinessId = addBusinessResult.Data.BusinessId,
-        //    BranchId = addBranchResult.Data.BranchId,
-        //    CurrencyId = getCurrencyResult.Data.CurrencyId,
-        //    AccountOrder = 1,
-        //    AccountName = "TL Kasası",
-        //    AccountCode = "10000000100000001",
-        //    Limit = 0,
-        //};
-        //var addCashExtResult = _cashAdvBl.Add(cashExtDto);
-        //if (!addCashExtResult.Success)
-        //    return addCashExtResult;
-
-        //// Yeni bir yönetici eklenir.
-        //ManagerDto managerDto = new()
-        //{
-        //    BusinessId = addBusinessResult.Data.BusinessId,
-        //    BranchId = addBranchResult.Data.BranchId,
-        //    NameSurname = registerSectionManagerDto.NameSurname,
-        //    Phone = registerSectionManagerDto.Phone,
-        //    Email = "",
-        //    Gender = "",
-        //    Notes = "",
-        //    AvatarUrl = "",
-        //    TaxOffice = registerSectionManagerDto.TaxOffice,
-        //    TaxNumber = registerSectionManagerDto.TaxNumber,
-        //    IdentityNumber = registerSectionManagerDto.IdentityNumber,
-        //};
-        //var addManagerResult = _managerBl.Add(managerDto);
-        //if (!addManagerResult.Success) 
-        //    return addManagerResult;
-
-        //// Yeni site grubu eklenir.
-        //SectionGroupDto sectionGroupDto = new()
-        //{
-        //    BusinessId = addBusinessResult.Data.BusinessId,
-        //    BranchId = addBranchResult.Data.BranchId,
-        //    SectionGroupName = "Genel",
-        //};
-        //var addSectionGroupResult = _sectionGroupBl.Add(sectionGroupDto);
-        //if (!addSectionGroupResult.Success) 
-        //    return addSectionGroupResult;
-
-        //return new SuccessResult(Messages.AuthorizationSectionManagerRegistered);
-        return new ErrorResult("Not Implemented!");
+        return new SuccessResult(Messages.AuthorizationRegistered);
     }
 
     private IResult Login(PersonExtDto personExtDto, PersonDto personDto)
@@ -252,11 +159,14 @@ public class PersonAdvBl : IPersonAdvBl
         if (!updatePersonResult.Success)
             return updatePersonResult;
 
-        personExtDto.RefreshToken = refreshToken;
-        personExtDto.RefreshTokenExpiryTime = DateTime.Now.AddSeconds(personExtDto.RefreshTokenDuration);
-        personExtDto.UpdatedAt = DateTimeOffset.Now;
-        personExtDto.AccessToken = accessToken;
+        var getUpdatedPersonResult = _personBl.GetById(personDto.PersonId);
+        if (!getUpdatedPersonResult.Success)
+            return getUpdatedPersonResult;
 
-        return new SuccessDataResult<PersonExtDto>(personExtDto, Messages.AuthorizationLoggedIn);
+        var personExtDtoResponse = _mapper.Map<PersonExtDto>(getUpdatedPersonResult.Data);
+        
+        personExtDtoResponse.AccessToken = accessToken;
+
+        return new SuccessDataResult<PersonExtDto>(personExtDtoResponse, Messages.AuthorizationLoggedIn);
     }
 }

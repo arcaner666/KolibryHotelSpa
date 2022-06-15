@@ -7,7 +7,8 @@ public class PersonExtDtoLoginWithPhoneValidator : AbstractValidator<PersonExtDt
 {
     public PersonExtDtoLoginWithPhoneValidator()
     {
-        RuleFor(a => a.Phone).NotEmpty();
-        RuleFor(a => a.Password).NotEmpty();
+        RuleFor(p => p.Phone).NotEmpty();
+        RuleFor(p => p.Password).NotEmpty();
+        RuleFor(p => p.RefreshTokenDuration).NotEmpty();
     }
 }

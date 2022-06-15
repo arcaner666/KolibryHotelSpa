@@ -3,12 +3,12 @@ using FluentValidation;
 
 namespace BusinessLayer.ValidationRules.FluentValidation;
 
-public class PersonExtDtoLoginWithEmailValidator : AbstractValidator<PersonExtDto>
+public class PersonExtDtoRegisterValidator : AbstractValidator<PersonExtDto>
 {
-    public PersonExtDtoLoginWithEmailValidator()
+    public PersonExtDtoRegisterValidator()
     {
         RuleFor(p => p.Email).NotEmpty();
+        RuleFor(p => p.Phone).NotEmpty();
         RuleFor(p => p.Password).NotEmpty();
-        RuleFor(p => p.RefreshTokenDuration).NotEmpty();
     }
 }
