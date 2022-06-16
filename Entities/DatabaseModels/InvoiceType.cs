@@ -11,7 +11,7 @@ namespace Entities.DatabaseModels
         }
 
         public byte InvoiceTypeId { get; set; }
-        public string Title { get; set; } = null!;
+        public string Title { get; set; }
 
         public virtual ICollection<Invoice> Invoices { get; set; }
     }

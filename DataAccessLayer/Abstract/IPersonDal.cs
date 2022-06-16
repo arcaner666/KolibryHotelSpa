@@ -9,5 +9,6 @@ public interface IPersonDal
     Person GetByEmail(string email);
     Person GetById(long id);
     Person GetByPhone(string phone);
+    List<PersonExt> GetExts();
     void Update(Person person);
 }

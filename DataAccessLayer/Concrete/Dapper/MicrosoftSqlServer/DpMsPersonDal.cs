@@ -110,6 +110,25 @@ public class DpMsPersonDal : IPersonDal
         return connection.Query<Person>(sql, new { @Phone = phone }).SingleOrDefault();
     }
 
+    public List<PersonExt> GetExts()
+    {
+        using var connection = _context.CreateConnection();
+        var sql = "SELECT"
+            + " PersonId,"
+            + " Email,"
+            + " Phone,"
+            + " PasswordHash,"
+            + " PasswordSalt,"
+            + " Role,"
+            + " Blocked,"
+            + " RefreshToken,"
+            + " RefreshTokenExpiryTime,"
+            + " CreatedAt,"
+            + " UpdatedAt"
+            + " FROM Person";
+        return connection.Query<PersonExt>(sql).ToList();
+    }
+
     public void Update(Person person)
     {
         using var connection = _context.CreateConnection();

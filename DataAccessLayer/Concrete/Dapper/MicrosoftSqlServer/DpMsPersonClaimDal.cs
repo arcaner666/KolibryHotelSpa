@@ -39,6 +39,20 @@ public class DpMsPersonClaimDal : IPersonClaimDal
         connection.Execute(sql, new { @PersonClaimId = id });
     }
 
+    public PersonClaim GetById(long id)
+    {
+        using var connection = _context.CreateConnection();
+        var sql = "SELECT"
+            + " PersonClaimId,"
+            + " PersonId,"
+            + " ClaimId,"
+            + " CreatedAt,"
+            + " UpdatedAt"
+            + " FROM PersonClaim"
+            + " WHERE PersonClaimId = @PersonClaimId";
+        return connection.Query<PersonClaim>(sql, new { @PersonClaimId = id }).SingleOrDefault();
+    }
+
     public PersonClaim GetByPersonIdAndClaimId(long personId, int claimId)
     {
         using var connection = _context.CreateConnection();

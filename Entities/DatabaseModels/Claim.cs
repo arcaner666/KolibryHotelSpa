@@ -11,7 +11,7 @@ namespace Entities.DatabaseModels
         }
 
         public int ClaimId { get; set; }
-        public string Title { get; set; } = null!;
+        public string Title { get; set; }
 
         public virtual ICollection<PersonClaim> PersonClaims { get; set; }
     }

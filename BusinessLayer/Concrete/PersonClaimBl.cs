@@ -41,6 +41,28 @@ public class PersonClaimBl : IPersonClaimBl
         return new SuccessDataResult<PersonClaimDto>(addedPersonClaimDto, Messages.PersonClaimAdded);
     }
 
+    public IResult Delete(long id)
+    {
+        var getPersonClaimResult = GetById(id);
+        if (getPersonClaimResult is null)
+            return getPersonClaimResult;
+
+        _personClaimDal.Delete(id);
+
+        return new SuccessResult(Messages.PersonClaimDeleted);
+    }
+
+    public IDataResult<PersonClaimDto> GetById(long id)
+    {
+        PersonClaim personClaim = _personClaimDal.GetById(id);
+        if (personClaim is null)
+            return new ErrorDataResult<PersonClaimDto>(Messages.PersonClaimNotFound);
+
+        var personClaimDto = _mapper.Map<PersonClaimDto>(personClaim);
+
+        return new SuccessDataResult<PersonClaimDto>(personClaimDto, Messages.PersonClaimListedById);
+    }
+
     public IDataResult<List<PersonClaimExtDto>> GetExtsByPersonId(long personId)
     {
         List<PersonClaimExt> personClaimExts = _personClaimDal.GetExtsByPersonId(personId);

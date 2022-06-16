@@ -16,6 +16,13 @@ public class AutofacModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+
+        builder.RegisterType<ContactBl>().As<IContactBl>().SingleInstance();
+        builder.RegisterType<DpMsContactDal>().As<IContactDal>().SingleInstance();
+
+        builder.RegisterType<ClaimBl>().As<IClaimBl>().SingleInstance();
+        builder.RegisterType<DpMsClaimDal>().As<IClaimDal>().SingleInstance();
+
         builder.RegisterType<CurrencyBl>().As<ICurrencyBl>().SingleInstance();
         builder.RegisterType<DpMsCurrencyDal>().As<ICurrencyDal>().SingleInstance();
 
@@ -26,9 +33,6 @@ public class AutofacModule : Module
         builder.RegisterType<KeyService>().As<IKeyService>().SingleInstance();
 
         builder.RegisterType<LoggerManager>().As<ILoggerManager>().SingleInstance();
-
-        builder.RegisterType<ClaimBl>().As<IClaimBl>().SingleInstance();
-        builder.RegisterType<DpMsClaimDal>().As<IClaimDal>().SingleInstance();
 
         builder.RegisterType<PersonAdvBl>().As<IPersonAdvBl>().SingleInstance();
         builder.RegisterType<PersonBl>().As<IPersonBl>().SingleInstance();

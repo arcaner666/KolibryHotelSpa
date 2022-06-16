@@ -11,12 +11,43 @@ namespace Api.Controllers;
 public class PersonsController : ControllerBase
 {
     private readonly IPersonAdvBl _personAdvBl;
+    private readonly IPersonBl _personBl;
 
     public PersonsController(
-        IPersonAdvBl personAdvBl
+        IPersonAdvBl personAdvBl,
+        IPersonBl personBl
     )
     {
         _personAdvBl = personAdvBl;
+        _personBl = personBl;
+    }
+
+    // Sadece geliştirme aşamasında açık kalmalı çünkü sisteme kullanıcı ekleme işi kontrollü olacak.
+    [HttpPost("add")]
+    public IActionResult Add(PersonExtDto personExtDto)
+    {
+        var result = _personAdvBl.Add(personExtDto);
+        if (result.Success)
+            return Ok(result);
+        return StatusCode(StatusCodes.Status500InternalServerError, result);
+    }
+
+    [HttpDelete("delete/{id}")]
+    public IActionResult Delete(long id)
+    {
+        var result = _personAdvBl.Delete(id);
+        if (result.Success)
+            return Ok(result);
+        return StatusCode(StatusCodes.Status500InternalServerError, result);
+    }
+
+    [HttpGet("getexts")]
+    public IActionResult GetExts()
+    {
+        var result = _personBl.GetExts();
+        if (result.Success)
+            return Ok(result);
+        return StatusCode(StatusCodes.Status500InternalServerError, result);
     }
 
     [HttpPost("loginwithemail")]
@@ -57,12 +88,13 @@ public class PersonsController : ControllerBase
         return StatusCode(StatusCodes.Status500InternalServerError, result);
     }
 
-    [HttpPost("register")]
-    public IActionResult Register(PersonExtDto personExtDto)
-    {
-        var result = _personAdvBl.Register(personExtDto);
-        if (result.Success) 
-            return Ok(result);
-        return StatusCode(StatusCodes.Status500InternalServerError, result);
-    }
+    //[HttpPost("update")]
+    //[Authorize]
+    //public IActionResult Update(PersonExtDto personExtDto)
+    //{
+    //    var result = _personAdvBl.Update(personExtDto);
+    //    if (result.Success)
+    //        return Ok(result);
+    //    return StatusCode(StatusCodes.Status500InternalServerError, result);
+    //}
 }

@@ -11,7 +11,7 @@ namespace Entities.DatabaseModels
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
 
-        public virtual Claim Claim { get; set; } = null!;
-        public virtual Person Person { get; set; } = null!;
+        public virtual Claim Claim { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

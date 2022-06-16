@@ -48,6 +48,17 @@ public class PersonBl : IPersonBl
         return new SuccessDataResult<PersonDto>(addedPersonDto, Messages.PersonAdded);
     }
 
+    public IResult Delete(long id)
+    {
+        var getPersonResult = GetById(id);
+        if (getPersonResult is null)
+            return getPersonResult;
+
+        _personDal.Delete(id);
+
+        return new SuccessResult(Messages.PersonDeleted);
+    }
+
     public IDataResult<PersonDto> GetByEmail(string email)
     {
         Person person = _personDal.GetByEmail(email);
@@ -81,14 +92,23 @@ public class PersonBl : IPersonBl
         return new SuccessDataResult<PersonDto>(personDto, Messages.PersonListedByPhone);
     }
 
+    public IDataResult<List<PersonExtDto>> GetExts()
+    {
+        List<PersonExt> personExts = _personDal.GetExts();
+        if (!personExts.Any())
+            return new ErrorDataResult<List<PersonExtDto>>(Messages.PersonNotFound);
+
+        var personExtDtos = _mapper.Map<List<PersonExtDto>>(personExts);
+
+        return new SuccessDataResult<List<PersonExtDto>>(personExtDtos, Messages.PersonExtsListed);
+    }
+
     public IResult Update(PersonDto personDto)
     {
         Person person = _personDal.GetById(personDto.PersonId);
         if (person is null)
             return new ErrorDataResult<PersonDto>(Messages.PersonNotFound);
 
-        person.Email = personDto.Email;
-        person.Phone = personDto.Phone;
         person.Role = personDto.Role;
         person.Blocked = personDto.Blocked;
         person.RefreshToken = personDto.RefreshToken;

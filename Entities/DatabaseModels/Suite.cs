@@ -11,7 +11,7 @@ namespace Entities.DatabaseModels
         }
 
         public int SuiteId { get; set; }
-        public string Title { get; set; } = null!;
+        public string Title { get; set; }
         public byte Bed { get; set; }
         public short M2 { get; set; }
         public decimal Price { get; set; }

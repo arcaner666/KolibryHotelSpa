@@ -15,10 +15,10 @@ namespace Entities.DatabaseModels
         public byte InvoiceTypeId { get; set; }
         public byte PaymentTypeId { get; set; }
         public byte CurrencyId { get; set; }
-        public string BuyerNameSurname { get; set; } = null!;
-        public string BuyerEmail { get; set; } = null!;
-        public string BuyerPhone { get; set; } = null!;
-        public string Title { get; set; } = null!;
+        public string BuyerNameSurname { get; set; }
+        public string BuyerEmail { get; set; }
+        public string BuyerPhone { get; set; }
+        public string Title { get; set; }
         public decimal NetPrice { get; set; }
         public byte Vat { get; set; }
         public decimal TotalVat { get; set; }
@@ -28,9 +28,9 @@ namespace Entities.DatabaseModels
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
 
-        public virtual Currency Currency { get; set; } = null!;
-        public virtual InvoiceType InvoiceType { get; set; } = null!;
-        public virtual PaymentType PaymentType { get; set; } = null!;
+        public virtual Currency Currency { get; set; }
+        public virtual InvoiceType InvoiceType { get; set; }
+        public virtual PaymentType PaymentType { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
     }

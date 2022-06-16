@@ -37,6 +37,59 @@ public class PersonAdvBl : IPersonAdvBl
         _tokenHelper = tokenHelper;
     }
 
+    // Sadece geliştirme aşamasında açık kalmalı çünkü sisteme kullanıcı ekleme işi kontrollü olacak.
+    [TransactionScopeAspect]
+    [ValidationAspect(typeof(PersonExtDtoRegisterValidator))]
+    public IResult Add(PersonExtDto personExtDto)
+    {
+        PersonDto personDto = new()
+        {
+            Email = personExtDto.Email,
+            Phone = personExtDto.Phone,
+            Role = "Admin",
+            Password = personExtDto.Password,
+        };
+        var addPersonResult = _personBl.Add(personDto);
+        if (!addPersonResult.Success)
+            return addPersonResult;
+
+        var getClaimResult = _claimBl.GetByTitle("Admin");
+        if (!getClaimResult.Success)
+            return getClaimResult;
+
+        PersonClaimDto personClaimDto = new()
+        {
+            PersonId = addPersonResult.Data.PersonId,
+            ClaimId = getClaimResult.Data.ClaimId,
+        };
+        var addPersonClaimResult = _personClaimBl.Add(personClaimDto);
+        if (!addPersonClaimResult.Success)
+            return addPersonClaimResult;
+
+        return new SuccessResult(Messages.PersonExtAdded);
+    }
+
+    [TransactionScopeAspect]
+    public IResult Delete(long id)
+    {
+        var getPersonClaimsResult = _personClaimBl.GetExtsByPersonId(id);
+        if (!getPersonClaimsResult.Success)
+            return getPersonClaimsResult;
+
+        foreach (var personClaimExtDto in getPersonClaimsResult.Data)
+        {
+            var deletePersonClaimResult = _personClaimBl.Delete(personClaimExtDto.PersonClaimId);
+            if (!deletePersonClaimResult.Success)
+                return deletePersonClaimResult;
+        }
+
+        var deletePersonResult = _personBl.Delete(id);
+        if (!deletePersonResult.Success)
+            return deletePersonResult;
+
+        return new SuccessResult(Messages.PersonExtDeleted);
+    }
+
     [ValidationAspect(typeof(PersonExtDtoLoginWithEmailValidator))]
     public IResult LoginWithEmail(PersonExtDto personExtDto)
     {
@@ -73,7 +126,7 @@ public class PersonAdvBl : IPersonAdvBl
         if (!updatePersonResult.Success)
             return updatePersonResult;
 
-        return new SuccessResult(Messages.AuthorizationLoggedOut);
+        return new SuccessResult(Messages.PersonLoggedOut);
     }
 
     public IResult RefreshAccessToken(PersonExtDto personExtDto)
@@ -97,53 +150,21 @@ public class PersonAdvBl : IPersonAdvBl
         if (!getPersonResult.Success)
             return getPersonResult;
         if (getPersonResult.Data.RefreshToken != personExtDto.RefreshToken)
-            return new ErrorResult(Messages.AuthorizationTokenInvalid);
+            return new ErrorResult(Messages.PersonTokenInvalid);
         if (getPersonResult.Data.RefreshTokenExpiryTime <= DateTime.Now)
-            return new ErrorResult(Messages.AuthorizationTokenExpired);
+            return new ErrorResult(Messages.PersonTokenExpired);
 
         string newAccessToken = _tokenHelper.GenerateAccessToken(getPersonResult.Data.PersonId, personClaimExtDtos);
 
         personExtDto.AccessToken = newAccessToken;
 
-        return new SuccessDataResult<PersonExtDto>(personExtDto, Messages.AuthorizationTokensRefreshed);
-    }
-
-    // Sadece geliştirme aşamasında açık kalmalı çünkü sisteme kullanıcı ekleme işi kontrollü olacak.
-    [TransactionScopeAspect]
-    [ValidationAspect(typeof(PersonExtDtoRegisterValidator))]
-    public IResult Register(PersonExtDto personExtDto)
-    {
-        PersonDto personDto = new()
-        {
-            Email = personExtDto.Email,
-            Phone = personExtDto.Phone,
-            Role = "Admin",
-            Password = personExtDto.Password,
-        };
-        var addPersonResult = _personBl.Add(personDto);
-        if (!addPersonResult.Success)
-            return addPersonResult;
-
-        var getClaimResult = _claimBl.GetByTitle("Admin");
-        if (!getClaimResult.Success)
-            return getClaimResult;
-
-        PersonClaimDto personClaimDto = new()
-        {
-            PersonId = addPersonResult.Data.PersonId,
-            ClaimId = getClaimResult.Data.ClaimId,
-        };
-        var addPersonClaimResult = _personClaimBl.Add(personClaimDto);
-        if (!addPersonClaimResult.Success)
-            return addPersonClaimResult;
-
-        return new SuccessResult(Messages.AuthorizationRegistered);
+        return new SuccessDataResult<PersonExtDto>(personExtDto, Messages.PersonTokensRefreshed);
     }
 
     private IResult Login(PersonExtDto personExtDto, PersonDto personDto)
     {
         if (!HashingHelper.VerifyPasswordHash(personExtDto.Password, personDto.PasswordHash, personDto.PasswordSalt))
-            return new ErrorDataResult<PersonExtDto>(Messages.AuthorizationWrongPassword);
+            return new ErrorDataResult<PersonExtDto>(Messages.PersonWrongPassword);
 
         var getPersonClaimExtResult = _personClaimBl.GetExtsByPersonId(personDto.PersonId);
         if (!getPersonClaimExtResult.Success)
@@ -167,6 +188,18 @@ public class PersonAdvBl : IPersonAdvBl
         
         personExtDtoResponse.AccessToken = accessToken;
 
-        return new SuccessDataResult<PersonExtDto>(personExtDtoResponse, Messages.AuthorizationLoggedIn);
+        return new SuccessDataResult<PersonExtDto>(personExtDtoResponse, Messages.PersonLoggedIn);
+    }
+
+    [TransactionScopeAspect]
+    public IResult Update(PersonExtDto personExtDto)
+    {
+        var personDto = _mapper.Map<PersonDto>(personExtDto);
+
+        var updatePersonResult = _personBl.Update(personDto);
+        if (!updatePersonResult.Success)
+            return updatePersonResult;
+
+        return new SuccessResult(Messages.PersonExtUpdated);
     }
 }

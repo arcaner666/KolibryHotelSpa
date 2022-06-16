@@ -16,16 +16,17 @@ namespace Entities.DatabaseModels
         {
         }
 
-        public virtual DbSet<Claim> Claims { get; set; } = null!;
-        public virtual DbSet<Currency> Currencies { get; set; } = null!;
-        public virtual DbSet<Invoice> Invoices { get; set; } = null!;
-        public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; } = null!;
-        public virtual DbSet<InvoiceType> InvoiceTypes { get; set; } = null!;
-        public virtual DbSet<PaymentType> PaymentTypes { get; set; } = null!;
-        public virtual DbSet<Person> People { get; set; } = null!;
-        public virtual DbSet<PersonClaim> PersonClaims { get; set; } = null!;
-        public virtual DbSet<Reservation> Reservations { get; set; } = null!;
-        public virtual DbSet<Suite> Suites { get; set; } = null!;
+        public virtual DbSet<Claim> Claims { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Currency> Currencies { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
+        public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<PersonClaim> PersonClaims { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<Suite> Suites { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,7 +42,30 @@ namespace Entities.DatabaseModels
             {
                 entity.ToTable("Claim");
 
-                entity.Property(e => e.Title).HasMaxLength(500);
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<Contact>(entity =>
+            {
+                entity.ToTable("Contact");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.NameSurname)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Phone)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Currency>(entity =>
@@ -50,24 +74,36 @@ namespace Entities.DatabaseModels
 
                 entity.Property(e => e.CurrencyId).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.CurrencySymbol).HasMaxLength(5);
+                entity.Property(e => e.CurrencySymbol)
+                    .IsRequired()
+                    .HasMaxLength(5);
 
-                entity.Property(e => e.Title).HasMaxLength(50);
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Invoice>(entity =>
             {
                 entity.ToTable("Invoice");
 
-                entity.Property(e => e.BuyerEmail).HasMaxLength(50);
+                entity.Property(e => e.BuyerEmail)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                entity.Property(e => e.BuyerNameSurname).HasMaxLength(100);
+                entity.Property(e => e.BuyerNameSurname)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-                entity.Property(e => e.BuyerPhone).HasMaxLength(50);
+                entity.Property(e => e.BuyerPhone)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.NetPrice).HasColumnType("smallmoney");
 
-                entity.Property(e => e.Title).HasMaxLength(50);
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.TotalPrice).HasColumnType("smallmoney");
 
@@ -121,7 +157,9 @@ namespace Entities.DatabaseModels
 
                 entity.Property(e => e.InvoiceTypeId).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Title).HasMaxLength(50);
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<PaymentType>(entity =>
@@ -130,24 +168,38 @@ namespace Entities.DatabaseModels
 
                 entity.Property(e => e.PaymentTypeId).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Title).HasMaxLength(50);
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Person>(entity =>
             {
                 entity.ToTable("Person");
 
-                entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-                entity.Property(e => e.PasswordHash).HasMaxLength(500);
+                entity.Property(e => e.PasswordHash)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
-                entity.Property(e => e.PasswordSalt).HasMaxLength(500);
+                entity.Property(e => e.PasswordSalt)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
-                entity.Property(e => e.Phone).HasMaxLength(50);
+                entity.Property(e => e.Phone)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                entity.Property(e => e.RefreshToken).HasMaxLength(500);
+                entity.Property(e => e.RefreshToken)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
-                entity.Property(e => e.Role).HasMaxLength(50);
+                entity.Property(e => e.Role)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<PersonClaim>(entity =>
@@ -184,7 +236,9 @@ namespace Entities.DatabaseModels
 
                 entity.Property(e => e.Price).HasColumnType("smallmoney");
 
-                entity.Property(e => e.Title).HasMaxLength(50);
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.TotalPrice).HasColumnType("smallmoney");
 

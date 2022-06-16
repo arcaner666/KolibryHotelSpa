@@ -14,7 +14,7 @@ namespace Entities.DatabaseModels
         public decimal TotalVat { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public virtual Invoice Invoice { get; set; } = null!;
-        public virtual Suite Suite { get; set; } = null!;
+        public virtual Invoice Invoice { get; set; }
+        public virtual Suite Suite { get; set; }
     }
 }

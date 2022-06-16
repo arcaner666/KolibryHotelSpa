@@ -15,6 +15,6 @@ namespace Entities.DatabaseModels
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
 
-        public virtual Invoice Invoice { get; set; } = null!;
+        public virtual Invoice Invoice { get; set; }
     }
 }
