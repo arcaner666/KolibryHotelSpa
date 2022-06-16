@@ -2,7 +2,6 @@
 using BusinessLayer.Extensions;
 using BusinessLayer.Utilities.Results;
 using BusinessLayer.Utilities.Security.Encryption;
-using Entities.DTOs;
 using Entities.ExtendedDatabaseModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

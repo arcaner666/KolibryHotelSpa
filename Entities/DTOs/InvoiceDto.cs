@@ -6,10 +6,10 @@ public class InvoiceDto
     public byte InvoiceTypeId { get; set; }
     public byte PaymentTypeId { get; set; }
     public byte CurrencyId { get; set; }
-    public string BuyerNameSurname { get; set; } = null!;
-    public string BuyerEmail { get; set; } = null!;
-    public string BuyerPhone { get; set; } = null!;
-    public string Title { get; set; } = null!;
+    public string BuyerNameSurname { get; set; }
+    public string BuyerEmail { get; set; }
+    public string BuyerPhone { get; set; }
+    public string Title { get; set; }
     public decimal NetPrice { get; set; }
     public byte Vat { get; set; }
     public decimal TotalVat { get; set; }

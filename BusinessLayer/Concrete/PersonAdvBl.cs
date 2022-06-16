@@ -68,7 +68,7 @@ public class PersonAdvBl : IPersonAdvBl
             return getPersonResult;
 
         getPersonResult.Data.RefreshToken = "";
-        getPersonResult.Data.UpdatedAt = DateTime.Now;
+        getPersonResult.Data.UpdatedAt = DateTimeOffset.Now;
         var updatePersonResult = _personBl.Update(getPersonResult.Data);
         if (!updatePersonResult.Success)
             return updatePersonResult;
