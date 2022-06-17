@@ -9,8 +9,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Contact, ContactDto>();
-        CreateMap<Contact, ContactDto>().ReverseMap();
+        CreateMap<ContactForm, ContactFormDto>();
+        CreateMap<ContactForm, ContactFormDto>().ReverseMap();
         CreateMap<Claim, ClaimDto>();
         CreateMap<Claim, ClaimDto>().ReverseMap();
         CreateMap<Currency, CurrencyDto>();
@@ -25,6 +25,14 @@ public class MappingProfile : Profile
         CreateMap<PersonDto, PersonExtDto>().ReverseMap();
         CreateMap<PersonExt, PersonExtDto>();
         CreateMap<PersonExt, PersonExtDto>().ReverseMap();
+        CreateMap<Invoice, InvoiceDto>();
+        CreateMap<Invoice, InvoiceDto>().ReverseMap();
+        CreateMap<InvoiceDetail, InvoiceDetailDto>();
+        CreateMap<InvoiceDetail, InvoiceDetailDto>().ReverseMap();
+        CreateMap<InvoiceDto, InvoiceExtDto>();
+        CreateMap<InvoiceDto, InvoiceExtDto>().ReverseMap();
+        CreateMap<InvoiceExt, InvoiceExtDto>();
+        CreateMap<InvoiceExt, InvoiceExtDto>().ReverseMap();
         CreateMap<Suite, SuiteDto>();
         CreateMap<Suite, SuiteDto>().ReverseMap();
     }

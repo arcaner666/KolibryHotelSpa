@@ -6,23 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
-[Route("api/contacts/")]
+[Route("api/contactforms/")]
 [ApiController]
-public class ContactsController : ControllerBase
+public class ContactFormsController : ControllerBase
 {
-    private readonly IContactBl _contactBl;
+    private readonly IContactFormBl _contactFormBl;
 
-    public ContactsController(
-        IContactBl contactBl
+    public ContactFormsController(
+        IContactFormBl contactFormBl
     )
     {
-        _contactBl = contactBl;
+        _contactFormBl = contactFormBl;
     }
 
     [HttpPost("add")]
-    public IActionResult Add(ContactDto contactDto)
+    public IActionResult Add(ContactFormDto contactFormDto)
     {
-        var result = _contactBl.Add(contactDto);
+        var result = _contactFormBl.Add(contactFormDto);
         if (result.Success)
             return Ok(result);
         return StatusCode(StatusCodes.Status500InternalServerError, result);
@@ -31,7 +31,7 @@ public class ContactsController : ControllerBase
     [HttpDelete("delete/{id}")]
     public IActionResult Delete(long id)
     {
-        var result = _contactBl.Delete(id);
+        var result = _contactFormBl.Delete(id);
         if (result.Success)
             return Ok(result);
         return StatusCode(StatusCodes.Status500InternalServerError, result);
@@ -40,7 +40,7 @@ public class ContactsController : ControllerBase
     [HttpGet("getall")]
     public IActionResult GetAll()
     {
-        var result = _contactBl.GetAll();
+        var result = _contactFormBl.GetAll();
         if (result.Success)
             return Ok(result);
         return StatusCode(StatusCodes.Status500InternalServerError, result);
@@ -49,7 +49,7 @@ public class ContactsController : ControllerBase
     [HttpGet("getbyid/{id}")]
     public IActionResult GetById(long id)
     {
-        var result = _contactBl.GetById(id);
+        var result = _contactFormBl.GetById(id);
         if (result.Success)
             return Ok(result);
         return StatusCode(StatusCodes.Status500InternalServerError, result);

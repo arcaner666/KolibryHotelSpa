@@ -17,15 +17,12 @@ namespace Entities.DatabaseModels
         }
 
         public virtual DbSet<Claim> Claims { get; set; }
-        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<ContactForm> ContactForms { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
-        public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
-        public virtual DbSet<PaymentType> PaymentTypes { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PersonClaim> PersonClaims { get; set; }
-        public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Suite> Suites { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -47,9 +44,9 @@ namespace Entities.DatabaseModels
                     .HasMaxLength(500);
             });
 
-            modelBuilder.Entity<Contact>(entity =>
+            modelBuilder.Entity<ContactForm>(entity =>
             {
-                entity.ToTable("Contact");
+                entity.ToTable("ContactForm");
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -115,19 +112,7 @@ namespace Entities.DatabaseModels
                     .WithMany(p => p.Invoices)
                     .HasForeignKey(d => d.CurrencyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Invoice__Currenc__35BCFE0A");
-
-                entity.HasOne(d => d.InvoiceType)
-                    .WithMany(p => p.Invoices)
-                    .HasForeignKey(d => d.InvoiceTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Invoice__Invoice__33D4B598");
-
-                entity.HasOne(d => d.PaymentType)
-                    .WithMany(p => p.Invoices)
-                    .HasForeignKey(d => d.PaymentTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Invoice__Payment__34C8D9D1");
+                    .HasConstraintName("FK__Invoice__Currenc__300424B4");
             });
 
             modelBuilder.Entity<InvoiceDetail>(entity =>
@@ -146,35 +131,13 @@ namespace Entities.DatabaseModels
                     .WithMany(p => p.InvoiceDetails)
                     .HasForeignKey(d => d.InvoiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__InvoiceDe__Invoi__38996AB5");
+                    .HasConstraintName("FK__InvoiceDe__Invoi__32E0915F");
 
                 entity.HasOne(d => d.Suite)
                     .WithMany(p => p.InvoiceDetails)
                     .HasForeignKey(d => d.SuiteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__InvoiceDe__Suite__398D8EEE");
-            });
-
-            modelBuilder.Entity<InvoiceType>(entity =>
-            {
-                entity.ToTable("InvoiceType");
-
-                entity.Property(e => e.InvoiceTypeId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<PaymentType>(entity =>
-            {
-                entity.ToTable("PaymentType");
-
-                entity.Property(e => e.PaymentTypeId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                    .HasConstraintName("FK__InvoiceDe__Suite__33D4B598");
             });
 
             modelBuilder.Entity<Person>(entity =>
@@ -214,24 +177,13 @@ namespace Entities.DatabaseModels
                     .WithMany(p => p.PersonClaims)
                     .HasForeignKey(d => d.ClaimId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__PersonCla__Claim__2D27B809");
+                    .HasConstraintName("FK__PersonCla__Claim__29572725");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.PersonClaims)
                     .HasForeignKey(d => d.PersonId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__PersonCla__Perso__2C3393D0");
-            });
-
-            modelBuilder.Entity<Reservation>(entity =>
-            {
-                entity.ToTable("Reservation");
-
-                entity.HasOne(d => d.Invoice)
-                    .WithMany(p => p.Reservations)
-                    .HasForeignKey(d => d.InvoiceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Reservati__Invoi__3C69FB99");
+                    .HasConstraintName("FK__PersonCla__Perso__286302EC");
             });
 
             modelBuilder.Entity<Suite>(entity =>

@@ -8,14 +8,14 @@ public static class Messages
 
     #endregion
 
-    #region Contact
-    public const string ContactAdded = "ContactAdded";
-    public const string ContactAlreadyExists = "ContactAlreadyExists";
-    public const string ContactDeleted = "ContactDeleted";
-    public const string ContactListedById = "ContactListedById";
-    public const string ContactNotFound = "ClaimNotFound";
-    public const string ContactsListed = "ClaimsListed";
-    public const string ContactsNotFound = "ClaimsNotFound";
+    #region ContactForm
+    public const string ContactFormAdded = "ContactFormAdded";
+    public const string ContactFormAlreadyExists = "ContactFormAlreadyExists";
+    public const string ContactFormDeleted = "ContactFormDeleted";
+    public const string ContactFormListedById = "ContactFormListedById";
+    public const string ContactFormNotFound = "ContactFormNotFound";
+    public const string ContactFormsListed = "ContactFormsListed";
+    public const string ContactFormsNotFound = "ContactFormsNotFound";
     #endregion
 
     #region Claim
@@ -62,6 +62,33 @@ public static class Messages
     public const string PersonClaimListedById = "PersonClaimListedById";
     public const string PersonClaimNotFound = "PersonClaimNotFound";
     public const string PersonClaimsNotFound = "PersonClaimsNotFound";
+    #endregion
+
+    #region Invoice
+    public const string InvoiceAdded = "InvoiceAdded";
+    public const string InvoiceAlreadyExists = "InvoiceAlreadyExists";
+    public const string InvoiceDeleted = "InvoiceDeleted";
+    public const string InvoiceExtAdded = "InvoiceExtAdded";
+    public const string InvoiceExtDeleted = "InvoiceExtDeleted";
+    public const string InvoiceExtsListed = "InvoiceExtsListed";
+    public const string InvoiceExtsListedById = "InvoiceExtsListedById";
+    public const string InvoiceExtUpdated = "InvoiceExtUpdated";
+    public const string InvoiceListedById = "InvoiceListedById";
+    public const string InvoiceListedByInvoiceId = "InvoiceListedByInvoiceId";
+    public const string InvoiceNotFound = "InvoiceNotFound";
+    public const string InvoicesNotFound = "InvoicesNotFound";
+    public const string InvoiceUpdated = "InvoiceUpdated";
+    #endregion
+
+    #region InvoiceDetail
+    public const string InvoiceDetailAdded = "InvoiceDetailAdded";
+    public const string InvoiceDetailAlreadyExists = "InvoiceDetailAlreadyExists";
+    public const string InvoiceDetailDeleted = "InvoiceDetailDeleted";
+    public const string InvoiceDetailListedById = "InvoiceDetailListedById";
+    public const string InvoiceDetailNotFound = "InvoiceDetailNotFound";
+    public const string InvoiceDetailsListedByInvoiceId = "InvoiceDetailsListedByInvoiceId";
+    public const string InvoiceDetailsNotFound = "InvoiceDetailsNotFound";
+    public const string InvoiceDetailUpdated = "InvoiceDetailUpdated";
     #endregion
 
     #region Suite

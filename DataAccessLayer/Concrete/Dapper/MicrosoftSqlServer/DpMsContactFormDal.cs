@@ -4,19 +4,19 @@ using Dapper;
 
 namespace DataAccessLayer.Concrete.Dapper.MicrosoftSqlServer;
 
-public class DpMsContactDal : IContactDal
+public class DpMsContactFormDal : IContactFormDal
 {
     private readonly DapperContext _context;
 
-    public DpMsContactDal(DapperContext context)
+    public DpMsContactFormDal(DapperContext context)
     {
         _context = context;
     }
 
-    public long Add(Contact contact)
+    public long Add(ContactForm contactForm)
     {
         using var connection = _context.CreateConnection();
-        var sql = "INSERT INTO Contact ("
+        var sql = "INSERT INTO ContactForm ("
             + " NameSurname,"
             + " Email,"
             + " Phone,"
@@ -31,75 +31,75 @@ public class DpMsContactDal : IContactDal
             + " @CreatedAt,"
             + " @UpdatedAt)"
             + " SELECT CAST(SCOPE_IDENTITY() AS BIGINT)";
-        return connection.Query<long>(sql, contact).Single();
+        return connection.Query<long>(sql, contactForm).Single();
     }
 
     public void Delete(long id)
     {
         using var connection = _context.CreateConnection();
-        var sql = "DELETE FROM Contact"
-            + " WHERE ContactId = @ContactId";
-        connection.Execute(sql, new { @ContactId = id });
+        var sql = "DELETE FROM ContactForm"
+            + " WHERE ContactFormId = @ContactFormId";
+        connection.Execute(sql, new { @ContactFormId = id });
     }
 
-    public List<Contact> GetAll()
+    public List<ContactForm> GetAll()
     {
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
-            + " ContactId,"
+            + " ContactFormId,"
             + " NameSurname,"
             + " Email,"
             + " Phone,"
             + " Message,"
             + " CreatedAt,"
             + " UpdatedAt"
-            + " FROM Contact";
-        return connection.Query<Contact>(sql).ToList();
+            + " FROM ContactForm";
+        return connection.Query<ContactForm>(sql).ToList();
     }
 
-    public Contact GetById(long id)
+    public ContactForm GetById(long id)
     {
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
-            + " ContactId,"
+            + " ContactFormId,"
             + " NameSurname,"
             + " Email,"
             + " Phone,"
             + " Message,"
             + " CreatedAt,"
             + " UpdatedAt"
-            + " FROM Contact"
-            + " WHERE ContactId = @ContactId";
-        return connection.Query<Contact>(sql, new { @ContactId = id }).SingleOrDefault();
+            + " FROM ContactForm"
+            + " WHERE ContactFormId = @ContactFormId";
+        return connection.Query<ContactForm>(sql, new { @ContactFormId = id }).SingleOrDefault();
     }
 
-    public Contact GetByMessage(string message)
+    public ContactForm GetByMessage(string message)
     {
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
-            + " ContactId,"
+            + " ContactFormId,"
             + " NameSurname,"
             + " Email,"
             + " Phone,"
             + " Message,"
             + " CreatedAt,"
             + " UpdatedAt"
-            + " FROM Contact"
+            + " FROM ContactForm"
             + " WHERE Message = @Message";
-        return connection.Query<Contact>(sql, new { @Message = message }).SingleOrDefault();
+        return connection.Query<ContactForm>(sql, new { @Message = message }).SingleOrDefault();
     }
 
-    public void Update(Contact contact)
+    public void Update(ContactForm contactForm)
     {
         using var connection = _context.CreateConnection();
-        var sql = "UPDATE Contact SET"
+        var sql = "UPDATE ContactForm SET"
             + " NameSurname = @NameSurname,"
             + " Email = @Email,"
             + " Phone = @Phone,"
             + " Message = @Message,"
             + " CreatedAt = @CreatedAt,"
             + " UpdatedAt = @UpdatedAt"
-            + " WHERE ContactId = @ContactId";
-        connection.Execute(sql, contact);
+            + " WHERE ContactFormId = @ContactFormId";
+        connection.Execute(sql, contactForm);
     }
 }

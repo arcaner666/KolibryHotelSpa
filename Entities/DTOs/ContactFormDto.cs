@@ -1,8 +1,8 @@
 ﻿namespace Entities.DTOs;
 
-public class ContactDto
+public class ContactFormDto
 {
-    public long ContactId { get; set; }
+    public long ContactFormId { get; set; }
     public string NameSurname { get; set; }
     public string Email { get; set; }
     public string Phone { get; set; }

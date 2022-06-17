@@ -8,16 +8,23 @@ namespace Entities.DatabaseModels
         public Invoice()
         {
             InvoiceDetails = new HashSet<InvoiceDetail>();
-            Reservations = new HashSet<Reservation>();
         }
 
         public long InvoiceId { get; set; }
-        public byte InvoiceTypeId { get; set; }
-        public byte PaymentTypeId { get; set; }
         public byte CurrencyId { get; set; }
         public string BuyerNameSurname { get; set; }
         public string BuyerEmail { get; set; }
         public string BuyerPhone { get; set; }
+        public DateTimeOffset ReservationStartDate { get; set; }
+        public DateTimeOffset ReservationEndDate { get; set; }
+        public byte Adult { get; set; }
+        public byte Child { get; set; }
+        public byte ChildAge1 { get; set; }
+        public byte ChildAge2 { get; set; }
+        public byte ChildAge3 { get; set; }
+        public byte ChildAge4 { get; set; }
+        public byte ChildAge5 { get; set; }
+        public byte ChildAge6 { get; set; }
         public string Title { get; set; }
         public decimal NetPrice { get; set; }
         public decimal Vat { get; set; }
@@ -29,9 +36,6 @@ namespace Entities.DatabaseModels
         public DateTimeOffset UpdatedAt { get; set; }
 
         public virtual Currency Currency { get; set; }
-        public virtual InvoiceType InvoiceType { get; set; }
-        public virtual PaymentType PaymentType { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

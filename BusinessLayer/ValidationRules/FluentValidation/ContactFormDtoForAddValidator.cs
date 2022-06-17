@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace BusinessLayer.ValidationRules.FluentValidation;
 
-public class ContactDtoForAddValidator : AbstractValidator<ContactDto>
+public class ContactFormDtoForAddValidator : AbstractValidator<ContactFormDto>
 {
-    public ContactDtoForAddValidator()
+    public ContactFormDtoForAddValidator()
     {
         RuleFor(c => c.NameSurname).NotEmpty();
         RuleFor(c => c.Email).NotEmpty();

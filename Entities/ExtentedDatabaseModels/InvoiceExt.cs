@@ -1,8 +1,10 @@
-﻿namespace Entities.DTOs;
+﻿namespace Entities.ExtendedDatabaseModels;
 
-public class InvoiceDto
+public class InvoiceExt
 {
     public long InvoiceId { get; set; }
+    public byte InvoiceTypeId { get; set; }
+    public byte PaymentTypeId { get; set; }
     public byte CurrencyId { get; set; }
     public string BuyerNameSurname { get; set; }
     public string BuyerEmail { get; set; }
@@ -26,4 +28,9 @@ public class InvoiceDto
     public bool Canceled { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
+
+    // Extended With InvoiceType
+    // Extended With PaymentType
+    // Extended With Currency
+    // Extended With Currency
 }

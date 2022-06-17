@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Entities.DatabaseModels
 {
-    public partial class Contact
+    public partial class ContactForm
     {
-        public long ContactId { get; set; }
+        public long ContactFormId { get; set; }
         public string NameSurname { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

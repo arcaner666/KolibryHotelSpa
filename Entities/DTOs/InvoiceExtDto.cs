@@ -1,6 +1,6 @@
 ﻿namespace Entities.DTOs;
 
-public class InvoiceDto
+public class InvoiceExtDto
 {
     public long InvoiceId { get; set; }
     public byte CurrencyId { get; set; }
@@ -26,4 +26,11 @@ public class InvoiceDto
     public bool Canceled { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
+
+    // Extended With InvoiceType
+    // Extended With PaymentType
+    // Extended With Currency
+
+    // Extended With InvoiceDetail
+    public List<InvoiceDetailDto> InvoiceDetailDtos { get; set; }
 }
