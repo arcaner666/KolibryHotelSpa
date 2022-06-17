@@ -10,7 +10,7 @@ namespace Entities.DatabaseModels
         public int SuiteId { get; set; }
         public byte Amount { get; set; }
         public decimal Price { get; set; }
-        public byte Vat { get; set; }
+        public decimal Vat { get; set; }
         public decimal TotalVat { get; set; }
         public decimal TotalPrice { get; set; }
 

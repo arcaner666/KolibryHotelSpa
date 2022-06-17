@@ -15,7 +15,7 @@ namespace Entities.DatabaseModels
         public byte Bed { get; set; }
         public short M2 { get; set; }
         public decimal Price { get; set; }
-        public byte Vat { get; set; }
+        public decimal Vat { get; set; }
         public decimal TotalVat { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTimeOffset CreatedAt { get; set; }

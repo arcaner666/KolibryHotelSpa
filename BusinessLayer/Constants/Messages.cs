@@ -64,4 +64,14 @@ public static class Messages
     public const string PersonClaimsNotFound = "PersonClaimsNotFound";
     #endregion
 
+    #region Suite
+    public const string SuiteAdded = "SuiteAdded";
+    public const string SuiteAlreadyExists = "SuiteAlreadyExists";
+    public const string SuiteDeleted = "SuiteDeleted";
+    public const string SuiteListedById = "SuiteListedById";
+    public const string SuiteNotFound = "SuiteNotFound";
+    public const string SuitesListed = "SuitesListed";
+    public const string SuitesNotFound = "SuitesNotFound";
+    public const string SuiteUpdated = "SuiteUpdated";
+    #endregion
 }

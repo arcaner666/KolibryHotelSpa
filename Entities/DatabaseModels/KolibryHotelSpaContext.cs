@@ -89,7 +89,7 @@ namespace Entities.DatabaseModels
 
                 entity.Property(e => e.BuyerEmail)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.BuyerNameSurname)
                     .IsRequired()
@@ -108,6 +108,8 @@ namespace Entities.DatabaseModels
                 entity.Property(e => e.TotalPrice).HasColumnType("smallmoney");
 
                 entity.Property(e => e.TotalVat).HasColumnType("smallmoney");
+
+                entity.Property(e => e.Vat).HasColumnType("smallmoney");
 
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.Invoices)
@@ -137,6 +139,8 @@ namespace Entities.DatabaseModels
                 entity.Property(e => e.TotalPrice).HasColumnType("smallmoney");
 
                 entity.Property(e => e.TotalVat).HasColumnType("smallmoney");
+
+                entity.Property(e => e.Vat).HasColumnType("smallmoney");
 
                 entity.HasOne(d => d.Invoice)
                     .WithMany(p => p.InvoiceDetails)
@@ -243,6 +247,8 @@ namespace Entities.DatabaseModels
                 entity.Property(e => e.TotalPrice).HasColumnType("smallmoney");
 
                 entity.Property(e => e.TotalVat).HasColumnType("smallmoney");
+
+                entity.Property(e => e.Vat).HasColumnType("smallmoney");
             });
 
             OnModelCreatingPartial(modelBuilder);

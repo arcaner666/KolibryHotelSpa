@@ -25,5 +25,7 @@ public class MappingProfile : Profile
         CreateMap<PersonDto, PersonExtDto>().ReverseMap();
         CreateMap<PersonExt, PersonExtDto>();
         CreateMap<PersonExt, PersonExtDto>().ReverseMap();
+        CreateMap<Suite, SuiteDto>();
+        CreateMap<Suite, SuiteDto>().ReverseMap();
     }
 }

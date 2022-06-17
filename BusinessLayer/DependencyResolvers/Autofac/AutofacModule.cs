@@ -41,6 +41,9 @@ public class AutofacModule : Module
         builder.RegisterType<PersonClaimBl>().As<IPersonClaimBl>().SingleInstance();
         builder.RegisterType<DpMsPersonClaimDal>().As<IPersonClaimDal>().SingleInstance();
 
+        builder.RegisterType<SuiteBl>().As<ISuiteBl>().SingleInstance();
+        builder.RegisterType<DpMsSuiteDal>().As<ISuiteDal>().SingleInstance();
+
         var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
         builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

@@ -11,7 +11,7 @@ public class InvoiceDto
     public string BuyerPhone { get; set; }
     public string Title { get; set; }
     public decimal NetPrice { get; set; }
-    public byte Vat { get; set; }
+    public decimal Vat { get; set; }
     public decimal TotalVat { get; set; }
     public decimal TotalPrice { get; set; }
     public bool Paid { get; set; }
