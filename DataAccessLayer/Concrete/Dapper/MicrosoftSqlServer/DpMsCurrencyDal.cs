@@ -18,21 +18,23 @@ public class DpMsCurrencyDal : ICurrencyDal
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
             + " CurrencyId,"
-            + " CurrencyName,"
-            + " CurrencySymbol"
+            + " Title,"
+            + " CurrencySymbol,"
+            + " ExchangeRate"
             + " FROM Currency";
         return connection.Query<Currency>(sql).ToList();
     }        
     
-    public Currency GetByCurrencyName(string currencyName)
+    public Currency GetByTitle(string title)
     {
         using var connection = _context.CreateConnection();
         var sql = "SELECT"
             + " CurrencyId,"
-            + " CurrencyName,"
-            + " CurrencySymbol"
+            + " Title,"
+            + " CurrencySymbol,"
+            + " ExchangeRate"
             + " FROM Currency"
-            + " WHERE CurrencyName = @CurrencyName";
-        return connection.Query<Currency>(sql, new { @CurrencyName = currencyName }).SingleOrDefault();
+            + " WHERE Title = @Title";
+        return connection.Query<Currency>(sql, new { @Title = title }).SingleOrDefault();
     }
 }

@@ -5,5 +5,5 @@ namespace DataAccessLayer.Abstract;
 public interface ICurrencyDal
 {
     List<Currency> GetAll();
-    Currency GetByCurrencyName(string currencyName);
+    Currency GetByTitle(string title);
 }

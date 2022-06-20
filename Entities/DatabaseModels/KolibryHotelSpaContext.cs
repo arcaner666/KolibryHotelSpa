@@ -75,6 +75,8 @@ namespace Entities.DatabaseModels
                     .IsRequired()
                     .HasMaxLength(5);
 
+                entity.Property(e => e.ExchangeRate).HasColumnType("smallmoney");
+
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(50);

@@ -33,9 +33,9 @@ public class CurrencyBl : ICurrencyBl
         return new SuccessDataResult<List<CurrencyDto>>(currencyDtos, Messages.CurrenciesListed);
     }
 
-    public IDataResult<CurrencyDto> GetByCurrencyName(string currencyName)
+    public IDataResult<CurrencyDto> GetByTitle(string title)
     {
-        Currency currency = _currencyDal.GetByCurrencyName(currencyName);
+        Currency currency = _currencyDal.GetByTitle(title);
         if (currency is null)
             return new ErrorDataResult<CurrencyDto>(Messages.CurrencyNotFound);
 

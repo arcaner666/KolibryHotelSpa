@@ -6,5 +6,5 @@ namespace BusinessLayer.Abstract;
 public interface ICurrencyBl
 {
     IDataResult<List<CurrencyDto>> GetAll();
-    IDataResult<CurrencyDto> GetByCurrencyName(string currencyName);
+    IDataResult<CurrencyDto> GetByTitle(string title);
 }
