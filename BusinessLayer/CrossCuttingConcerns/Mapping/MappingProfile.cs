@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Entities.ConfigurationModels;
 using Entities.DatabaseModels;
 using Entities.DTOs;
 using Entities.ExtendedDatabaseModels;

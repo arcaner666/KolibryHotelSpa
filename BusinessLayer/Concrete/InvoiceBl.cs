@@ -27,7 +27,7 @@ public class InvoiceBl : IInvoiceBl
     {
         var addedInvoice = _mapper.Map<Invoice>(invoiceDto);
 
-        addedInvoice.Paid = true;
+        addedInvoice.Paid = false;
         addedInvoice.Canceled = false;
         addedInvoice.CreatedAt = DateTimeOffset.Now;
         addedInvoice.UpdatedAt = DateTimeOffset.Now;
@@ -78,6 +78,7 @@ public class InvoiceBl : IInvoiceBl
         if (invoice is null)
             return new ErrorDataResult<PersonDto>(Messages.InvoiceNotFound);
 
+        invoice.Paid = invoiceDto.Paid;
         invoice.Canceled = invoiceDto.Canceled;
         invoice.UpdatedAt = DateTimeOffset.Now;
         _invoiceDal.Update(invoice);

@@ -3,12 +3,12 @@
 public class InvoiceExt
 {
     public long InvoiceId { get; set; }
-    public byte InvoiceTypeId { get; set; }
-    public byte PaymentTypeId { get; set; }
     public byte CurrencyId { get; set; }
     public string BuyerNameSurname { get; set; }
     public string BuyerEmail { get; set; }
     public string BuyerPhone { get; set; }
+    public string BuyerAddress { get; set; }
+    public string BuyerIp { get; set; }
     public DateTimeOffset ReservationStartDate { get; set; }
     public DateTimeOffset ReservationEndDate { get; set; }
     public byte Adult { get; set; }

@@ -28,23 +28,25 @@ public class InvoiceAdvBl : IInvoiceAdvBl
 
     [TransactionScopeAspect]
     [ValidationAspect(typeof(InvoiceExtDtoForAddValidator))]
-    public IResult Add(InvoiceExtDto invoiceExtDto)
+    public IDataResult<InvoiceExtDto> Add(InvoiceExtDto invoiceExtDto)
     {
         var invoiceDto = _mapper.Map<InvoiceDto>(invoiceExtDto);
 
         var addedInvoice = _invoiceBl.Add(invoiceDto);
         if (!addedInvoice.Success)
-            return addedInvoice;
+            return new ErrorDataResult<InvoiceExtDto>(addedInvoice.Message);
 
         foreach (var invoiceDetailDto in invoiceExtDto.InvoiceDetailDtos)
         {
             invoiceDetailDto.InvoiceId = addedInvoice.Data.InvoiceId;
             var addInvoiceDetailResult = _invoiceDetailBl.Add(invoiceDetailDto);
             if (!addInvoiceDetailResult.Success)
-                return addInvoiceDetailResult;
+                return new ErrorDataResult<InvoiceExtDto>(addInvoiceDetailResult.Message);
         }
 
-        return new SuccessResult(Messages.InvoiceExtAdded);
+        var responseInvoiceExtDto = _mapper.Map<InvoiceExtDto>(addedInvoice.Data);
+
+        return new SuccessDataResult<InvoiceExtDto>(responseInvoiceExtDto, Messages.InvoiceExtAdded);
     }
 
     [TransactionScopeAspect]

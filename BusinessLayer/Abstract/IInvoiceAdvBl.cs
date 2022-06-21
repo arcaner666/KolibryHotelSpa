@@ -5,7 +5,7 @@ namespace BusinessLayer.Abstract;
 
 public interface IInvoiceAdvBl
 {
-    IResult Add(InvoiceExtDto invoiceExtDto);
+    IDataResult<InvoiceExtDto> Add(InvoiceExtDto invoiceExtDto);
     IResult Delete(long id);
     IResult Update(InvoiceExtDto invoiceExtDto);
 }

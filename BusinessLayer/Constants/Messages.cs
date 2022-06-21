@@ -32,6 +32,11 @@ public static class Messages
     public const string CurrencyNotFound = "CurrencyNotFound";
     #endregion
 
+    #region PayTr
+    public const string PayTrIframeTokenGenerated = "PayTrIframeTokenGenerated";
+    public const string PayTrCanNotGenerateIframeToken = "PayTrCanNotGenerateIframeToken";
+    #endregion
+
     #region Person
     public const string PersonAdded = "PersonAdded";
     public const string PersonAlreadyExists = "PersonAlreadyExists";

@@ -34,6 +34,8 @@ public class AutofacModule : Module
 
         builder.RegisterType<LoggerManager>().As<ILoggerManager>().SingleInstance();
 
+        builder.RegisterType<PayTrBl>().As<IPayTrBl>().SingleInstance();
+
         builder.RegisterType<PersonAdvBl>().As<IPersonAdvBl>().SingleInstance();
         builder.RegisterType<PersonBl>().As<IPersonBl>().SingleInstance();
         builder.RegisterType<DpMsPersonDal>().As<IPersonDal>().SingleInstance();

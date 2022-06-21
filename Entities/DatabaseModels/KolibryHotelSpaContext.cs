@@ -86,17 +86,25 @@ namespace Entities.DatabaseModels
             {
                 entity.ToTable("Invoice");
 
+                entity.Property(e => e.BuyerAddress)
+                    .IsRequired()
+                    .HasMaxLength(400);
+
                 entity.Property(e => e.BuyerEmail)
                     .IsRequired()
                     .HasMaxLength(100);
 
+                entity.Property(e => e.BuyerIp)
+                    .IsRequired()
+                    .HasMaxLength(39);
+
                 entity.Property(e => e.BuyerNameSurname)
                     .IsRequired()
-                    .HasMaxLength(100);
+                    .HasMaxLength(60);
 
                 entity.Property(e => e.BuyerPhone)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.NetPrice).HasColumnType("smallmoney");
 
