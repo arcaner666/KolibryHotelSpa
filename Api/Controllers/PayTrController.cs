@@ -3,6 +3,7 @@ using BusinessLayer.Extensions;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Specialized;
 
 namespace Api.Controllers;
 
@@ -26,5 +27,13 @@ public class PayTrController : ControllerBase
         if (result.Success)
             return Ok(result);
         return StatusCode(StatusCodes.Status500InternalServerError, result);
+    }
+
+    [HttpPost("setpaymentresult")]
+    public string SetPaymentResult()
+    {
+        var requestForm = Request.Form;
+        var result = _payTrBl.SetPaymentResult(requestForm);
+        return result;
     }
 }

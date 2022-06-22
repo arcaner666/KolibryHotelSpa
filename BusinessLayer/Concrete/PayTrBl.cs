@@ -5,32 +5,41 @@ using BusinessLayer.Utilities.Results;
 using Entities.DTOs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NLog;
 using System.Collections.Specialized;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
+using System.Net.Mail;
+using Microsoft.AspNetCore.Http;
 
 namespace BusinessLayer.Concrete;
 
 public class PayTrBl : IPayTrBl
 {
+    public static readonly string merchant_id = "288185";
+    public static readonly string merchant_key = "CR9Wfa4XjuDZq3YE";
+    public static readonly string merchant_salt = "b4BFeLnMax469SMo";
+
+    private readonly IInvoiceBl _invoiceBl;
+    private readonly ILogger _logger;
     private readonly IMapper _mapper;
 
     public PayTrBl(
+        IInvoiceBl invoiceBl,
+        ILogger logger,
         IMapper mapper
     )
     {
+        _invoiceBl = invoiceBl;
+        _logger = logger;
         _mapper = mapper;
     }
 
     public IDataResult<PayTrIframeDto> GetIframeToken(PayTrIframeDto payTrIframeDto)
     {
         // ####################### DÜZENLEMESİ ZORUNLU ALANLAR #######################
-        //
-        // API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
-        string merchant_id = "288185";
-        string merchant_key = "CR9Wfa4XjuDZq3YE";
-        string merchant_salt = "b4BFeLnMax469SMo";
         //
         // Müşterinizin sitenizde kayıtlı veya form vasıtasıyla aldığınız eposta adresi
         string emailstr = payTrIframeDto.Email;
@@ -136,5 +145,138 @@ public class PayTrBl : IPayTrBl
         }
 
         return new ErrorDataResult<PayTrIframeDto>("PAYTR IFRAME failed. reason:" + json.reason + ""); ;
+    }
+
+    public string SetPaymentResult(IFormCollection form)
+    {
+        // POST değerleri ile hash oluştur.
+        string merchant_oid = form["merchant_oid"];
+        string status = form["status"];
+        string total_amount = form["total_amount"];
+        string hash = form["hash"];
+        string test_mode = form["test_mode"];
+        string payment_type = form["payment_type"];
+
+        string birlestir = string.Concat(merchant_oid, merchant_salt, status, total_amount);
+        HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(merchant_key));
+        byte[] b = hmac.ComputeHash(Encoding.UTF8.GetBytes(birlestir));
+        string token = Convert.ToBase64String(b);
+        //
+        // Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
+        // Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
+        if (hash.ToString() != token)
+        {
+            _logger.Error(
+                $"Class: PayTrBl, " +
+                $"Method: SetPaymentResult, " +
+                $"Error: Hashes Did Not Match! " +
+                $"MerchantOid: {merchant_oid}, " +
+                $"Status: {status}, " +
+                $"TotalAmount: {total_amount}, " +
+                $"Hash: {hash}, " +
+                $"TestMode: {test_mode}, " +
+                $"PaymentType: {payment_type}");
+            return "PAYTR notification failed: bad hash";
+        }
+
+        // BURADA YAPILMASI GEREKENLER
+        // 1) Siparişin durumunu $post['merchant_oid'] değerini kullanarak veri tabanınızdan sorgulayın.
+        // 2) Eğer sipariş zaten daha önceden onaylandıysa veya iptal edildiyse  echo "OK"; exit; yaparak sonlandırın.
+        var searchedInvoice = _invoiceBl.GetById(Convert.ToInt64(merchant_oid));
+        if (!searchedInvoice.Success)
+            _logger.Error(
+                $"Class: PayTrBl, " +
+                $"Method: SetPaymentResult, " +
+                $"Error: {searchedInvoice.Message} " +
+                $"MerchantOid: {merchant_oid}, " +
+                $"Status: {status}, " +
+                $"TotalAmount: {total_amount}, " +
+                $"Hash: {hash}, " +
+                $"TestMode: {test_mode}, " +
+                $"PaymentType: {payment_type}");
+        if (searchedInvoice.Data.Paid == true) 
+            return "OK";
+
+        if (status == "success")
+        { //Ödeme Onaylandı
+
+            // BURADA YAPILMASI GEREKENLER ONAY İŞLEMLERİDİR.
+            // 1) Siparişi onaylayın.
+            // 2) iframe çağırma adımında merchant_oid ve diğer bilgileri veri tabanınıza kayıp edip bu aşamada karşılaştırarak eğer var ise bilgieri çekebilir ve otomatik sipariş tamamlama işlemleri yaptırabilirsiniz.
+            // 2) Eğer müşterinize mesaj / SMS / e-posta gibi bilgilendirme yapacaksanız bu aşamada yapabilirsiniz. Bu işlemide yine iframe çağırma adımında merchant_oid bilgisini kayıt edip bu aşamada sorgulayarak verilere ulaşabilirsiniz.
+            // 3) 1. ADIM'da gönderilen payment_amount sipariş tutarı taksitli alışveriş yapılması durumunda
+            // değişebilir. Güncel tutarı Request.Form['total_amount'] değerinden alarak muhasebe işlemlerinizde kullanabilirsiniz.
+
+            _logger.Info(
+                $"Class: PayTrBl, " +
+                $"Method: SetPaymentResult, " +
+                $"MerchantOid: {merchant_oid}, " +
+                $"Status: {status}, " +
+                $"TotalAmount: {total_amount}, " +
+                $"Hash: {hash}, " +
+                $"TestMode: {test_mode}, " +
+                $"PaymentType: {payment_type}, " +
+                $"Currency: {form["currency"]}, " +
+                $"PaymentAmount: {form["payment_amount"]}");
+
+            searchedInvoice.Data.Paid = true;
+            var updatedInvoice = _invoiceBl.Update(searchedInvoice.Data);
+            if (!updatedInvoice.Success)
+                _logger.Error(
+                    $"Class: PayTrBl, " +
+                    $"Method: SetPaymentResult, " +
+                    $"Error: {updatedInvoice.Message} " +
+                    $"MerchantOid: {merchant_oid}, " +
+                    $"Status: {status}, " +
+                    $"TotalAmount: {total_amount}, " +
+                    $"Hash: {hash}, " +
+                    $"TestMode: {test_mode}, " +
+                    $"PaymentType: {payment_type}");
+
+            // Bildirimin alındığını PayTR sistemine bildir.  
+            return "OK";
+        }
+        else
+        { //Ödemeye Onay Verilmedi
+
+            // BURADA YAPILMASI GEREKENLER
+            // 1) Siparişi iptal edin.
+            // 2) Eğer ödemenin onaylanmama sebebini kayıt edecekseniz aşağıdaki değerleri kullanabilirsiniz.
+            // $post['failed_reason_code'] - başarısız hata kodu
+            // $post['failed_reason_msg'] - başarısız hata mesajı
+            _logger.Error(
+                $"Class: PayTrBl, " +
+                $"Method: SetPaymentResult, " +
+                $"Error: Payment Failed! " +
+                $"MerchantOid: {merchant_oid}, " +
+                $"Status: {status}, " +
+                $"TotalAmount: {total_amount}, " +
+                $"Hash: {hash}, " +
+                $"FailedReasonCode: {form["failed_reason_code"]}, " +
+                $"FailedReasonMessage: {form["failed_reason_msg"]}, " +
+                $"TestMode: {test_mode}, " +
+                $"PaymentType: {payment_type}");
+
+            searchedInvoice.Data.Paid = false;
+            searchedInvoice.Data.Canceled = true;
+            var updatedInvoice = _invoiceBl.Update(searchedInvoice.Data);
+            if (!updatedInvoice.Success)
+                _logger.Error(updatedInvoice.Message);
+                _logger.Error(
+                    $"Class: PayTrBl, " +
+                    $"Method: SetPaymentResult, " +
+                    $"Error: {updatedInvoice.Message} " +
+                    $"MerchantOid: {merchant_oid}, " +
+                    $"Status: {status}, " +
+                    $"TotalAmount: {total_amount}, " +
+                    $"Hash: {hash}, " +
+                    $"FailedReasonCode: {form["failed_reason_code"]}, " +
+                    $"FailedReasonMessage: {form["failed_reason_msg"]}, " +
+                    $"TestMode: {test_mode}, " +
+                    $"PaymentType: {payment_type}");
+
+            // Bildirimin alındığını PayTR sistemine bildir.  
+            return "OK";
+        }
     }
 }
