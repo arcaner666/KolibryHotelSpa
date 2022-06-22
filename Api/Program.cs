@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Api.Extensions;
+using BusinessLayer;
 using BusinessLayer.CrossCuttingConcerns.Logging;
 using BusinessLayer.DependencyResolvers.Autofac;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
-using BusinessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 

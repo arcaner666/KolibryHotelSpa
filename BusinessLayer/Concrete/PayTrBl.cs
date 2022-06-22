@@ -3,6 +3,7 @@ using BusinessLayer.Abstract;
 using BusinessLayer.Constants;
 using BusinessLayer.Utilities.Results;
 using Entities.DTOs;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
@@ -10,9 +11,6 @@ using System.Collections.Specialized;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
-using System.Net.Mail;
-using Microsoft.AspNetCore.Http;
 
 namespace BusinessLayer.Concrete;
 
