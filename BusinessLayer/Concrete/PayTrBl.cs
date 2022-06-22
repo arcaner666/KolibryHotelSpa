@@ -194,7 +194,7 @@ public class PayTrBl : IPayTrBl
                 $"Hash: {hash}, " +
                 $"TestMode: {test_mode}, " +
                 $"PaymentType: {payment_type}");
-        if (searchedInvoice.Data.Paid == true) 
+        if (searchedInvoice.Data.Paid == true || searchedInvoice.Data.Canceled == true) 
             return "OK";
 
         if (status == "success")
