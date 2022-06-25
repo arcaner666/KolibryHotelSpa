@@ -23,6 +23,7 @@ public class AutofacModule : Module
         builder.RegisterType<ClaimBl>().As<IClaimBl>().SingleInstance();
         builder.RegisterType<DpMsClaimDal>().As<IClaimDal>().SingleInstance();
 
+        builder.RegisterType<CurrencyAdvBl>().As<ICurrencyAdvBl>().SingleInstance();
         builder.RegisterType<CurrencyBl>().As<ICurrencyBl>().SingleInstance();
         builder.RegisterType<DpMsCurrencyDal>().As<ICurrencyDal>().SingleInstance();
 

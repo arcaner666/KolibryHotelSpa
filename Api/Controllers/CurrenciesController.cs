@@ -8,12 +8,15 @@ namespace Api.Controllers;
 [ApiController]
 public class CurrenciesController : ControllerBase
 {
+    private readonly ICurrencyAdvBl _currencyAdvBl;
     private readonly ICurrencyBl _currencyBl;
 
     public CurrenciesController(
+        ICurrencyAdvBl currencyAdvBl,
         ICurrencyBl currencyBl
     )
     {
+        _currencyAdvBl = currencyAdvBl;
         _currencyBl = currencyBl;
     }
 
@@ -24,5 +27,15 @@ public class CurrenciesController : ControllerBase
         if (result.Success) 
             return Ok(result);
         return StatusCode(StatusCodes.Status500InternalServerError, result);
+    }
+
+    [HttpGet("updateexchangerates")]
+    public IActionResult UpdateExchangeRates()
+    {
+        var result = _currencyAdvBl.UpdateExchangeRates();
+        if (result.Success)
+            return Ok(result);
+        //return StatusCode(StatusCodes.Status500InternalServerError, result);
+        return BadRequest(result);
     }
 }
