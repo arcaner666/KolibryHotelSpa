@@ -21,7 +21,6 @@ public class CurrencyAdvBl : ICurrencyAdvBl
     public CurrencyAdvBl(
         ICurrencyBl currencyBl,
         ILoggerManager loggerManager
-
     )
     {
         _currencyBl = currencyBl;
@@ -30,7 +29,7 @@ public class CurrencyAdvBl : ICurrencyAdvBl
 
     public IDataResult<List<CurrencyDto>> GetAll()
     {
-        var updateCurrenciesResult = UpdateExchangeRates();
+        var updateCurrenciesResult = UpdateExchangeRatesFromTcmb();
         if (!updateCurrenciesResult.Success)
             return new ErrorDataResult<List<CurrencyDto>>(updateCurrenciesResult.Message);
 
@@ -41,7 +40,26 @@ public class CurrencyAdvBl : ICurrencyAdvBl
         return new SuccessDataResult<List<CurrencyDto>>(getCurrenciesResult.Data, Messages.CurrenciesListed);
     }
 
-    private IResult UpdateExchangeRates()
+    // https://openexchangerates.org/ Ücretsiz planda aylık 1000 request limiti var ve referans döviz USD.
+    private IResult UpdateExchangeRatesFromOpenExchangeRates()
+    {
+        string sourceLink = "https://openexchangerates.org/api/latest.json?";
+
+        // Veri çekebilmek için zorunlu. Sitedeki dashboard üzerinden edinilebilir.
+        string appId = "6f0ee32a2d31410c8ec80c6a03a2b7c2";
+
+        using HttpClient client = new();
+        var request = new HttpRequestMessage(HttpMethod.Get, sourceLink);
+        request.Headers.Add("Authorization", $"Token {appId}");
+        var response = client.Send(request);
+        return new ErrorResult(Messages.CurrencyExchangeRatesCanNotRetrieveFromSource);
+        if (!response.IsSuccessStatusCode)
+            return new ErrorResult(Messages.CurrencyExchangeRatesCanNotRetrieveFromSource);
+        // DÖVİZLER KAYNAKTAN GETİRİLİYOR FAKAT VERİ TABANINDAKİ KURLARI GÜNCELLEME İŞLEMİ YAPILMADI SONRA YAPILACAK!!!
+    }
+
+    // https://tcmb.gov.tr/kurlar/today.xml Ücretsiz ve limitsiz fakat bir gün öncenin verilerini veriyor, günlük güncelleniyor.
+    private IResult UpdateExchangeRatesFromTcmb()
     {
         var getCurrenciesResult = _currencyBl.GetAll();
         if (!getCurrenciesResult.Success)
@@ -52,9 +70,7 @@ public class CurrencyAdvBl : ICurrencyAdvBl
         if (DateTimeOffset.Now.ToUnixTimeSeconds() - getCurrenciesResult.Data.Find(c => c.AlphabeticCode == "USD").UpdatedAt.ToUnixTimeSeconds() < 43200) // 12 saatte bir
             return new SuccessResult(Messages.CurrencyExchangeRatesAreUpToDate);
 
-        // Alttaki adresten gelen verinin formatı XML'dir. Şekli ise aşağıdaki gibidir.
-        // Merkez bankası kurları hep bir gün sonra yayınlıyor.
-
+        // Gelen verinin formatı aşağıdaki gibidir.
         //<? xml version = "1.0" encoding = "UTF-8" ?>
         //<? xml - stylesheet type = "text/xsl" href = "isokur.xsl" ?>
         //< Tarih_Date Tarih = "27.06.2022" Date = "06/27/2022" Bulten_No = "2022/122" >
