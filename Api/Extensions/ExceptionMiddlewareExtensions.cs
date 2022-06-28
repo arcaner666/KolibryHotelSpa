@@ -19,11 +19,20 @@ public static class ExceptionMiddlewareExtensions
                 if (contextFeature != null)
                 {
                     logger.LogError($"Something went wrong: {contextFeature.Error}");
+                    //await context.Response.WriteAsync(
+                    //    new ErrorDetails() 
+                    //    { 
+                    //        StatusCode = context.Response.StatusCode,
+                    //        Message = "Internal Server Error.",
+                    //    }.ToString());
+
+                    // Üstteki blok front-end'de 500 Internal Error mesajı gönderirken hatanın detayını logluyor.
+                    // CodeMaze'in kitabını bitirmediğim için önce alttakiyle hataları görmeliyim.
                     await context.Response.WriteAsync(
-                        new ErrorDetails() 
-                        { 
+                        new ErrorDetails()
+                        {
                             StatusCode = context.Response.StatusCode,
-                            Message = "Internal Server Error.",
+                            Message = contextFeature.Error.ToString(),
                         }.ToString());
                 }
             });

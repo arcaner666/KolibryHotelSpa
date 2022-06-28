@@ -5,5 +5,5 @@ namespace BusinessLayer.Abstract;
 
 public interface ICurrencyAdvBl
 {
-    IResult UpdateExchangeRates();
+    IDataResult<List<CurrencyDto>> GetAll();
 }

@@ -79,7 +79,7 @@ public class InvoiceDetailBl : IInvoiceDetailBl
     {
         InvoiceDetail invoiceDetail = _invoiceDetailDal.GetById(invoiceDetailDto.InvoiceDetailId);
         if (invoiceDetail is null)
-            return new ErrorDataResult<PersonDto>(Messages.InvoiceDetailNotFound);
+            return new ErrorResult(Messages.InvoiceDetailNotFound);
 
         invoiceDetail.SuiteId = invoiceDetailDto.SuiteId;
         invoiceDetail.Amount = invoiceDetailDto.Amount;

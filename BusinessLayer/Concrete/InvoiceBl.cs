@@ -76,7 +76,7 @@ public class InvoiceBl : IInvoiceBl
     {
         Invoice invoice = _invoiceDal.GetById(invoiceDto.InvoiceId);
         if (invoice is null)
-            return new ErrorDataResult<PersonDto>(Messages.InvoiceNotFound);
+            return new ErrorResult(Messages.InvoiceNotFound);
 
         invoice.Paid = invoiceDto.Paid;
         invoice.Canceled = invoiceDto.Canceled;

@@ -83,7 +83,7 @@ public class SuiteBl : ISuiteBl
     {
         Suite suite = _suiteDal.GetById(suiteDto.SuiteId);
         if (suite is null)
-            return new ErrorDataResult<PersonDto>(Messages.SuiteNotFound);
+            return new ErrorResult(Messages.SuiteNotFound);
 
         suite.Title = suiteDto.Title;
         suite.Bed = suiteDto.Bed;

@@ -43,4 +43,17 @@ public class CurrencyBl : ICurrencyBl
 
         return new SuccessDataResult<CurrencyDto>(currencyDto, Messages.CurrencyListedByTitle);
     }
+
+    public IResult Update(CurrencyDto currencyDto)
+    {
+        Currency currency = _currencyDal.GetById(currencyDto.CurrencyId);
+        if (currency is null)
+            return new ErrorResult(Messages.CurrencyNotFound);
+
+        currency.ExchangeRate = currencyDto.ExchangeRate;
+        currency.UpdatedAt = DateTimeOffset.Now;
+        _currencyDal.Update(currency);
+
+        return new SuccessResult(Messages.CurrencyUpdated);
+    }
 }

@@ -7,4 +7,5 @@ public interface ICurrencyBl
 {
     IDataResult<List<CurrencyDto>> GetAll();
     IDataResult<CurrencyDto> GetByTitle(string title);
+    IResult Update(CurrencyDto currencyDto);
 }

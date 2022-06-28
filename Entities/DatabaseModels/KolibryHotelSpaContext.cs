@@ -71,6 +71,10 @@ namespace Entities.DatabaseModels
 
                 entity.Property(e => e.CurrencyId).ValueGeneratedOnAdd();
 
+                entity.Property(e => e.AlphabeticCode)
+                    .IsRequired()
+                    .HasMaxLength(3);
+
                 entity.Property(e => e.CurrencySymbol)
                     .IsRequired()
                     .HasMaxLength(5);

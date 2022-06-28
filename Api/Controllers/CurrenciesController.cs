@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Abstract;
-using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -23,19 +22,9 @@ public class CurrenciesController : ControllerBase
     [HttpGet("getall")]
     public IActionResult GetAll()
     {
-        var result = _currencyBl.GetAll();
+        var result = _currencyAdvBl.GetAll();
         if (result.Success) 
             return Ok(result);
         return StatusCode(StatusCodes.Status500InternalServerError, result);
-    }
-
-    [HttpGet("updateexchangerates")]
-    public IActionResult UpdateExchangeRates()
-    {
-        var result = _currencyAdvBl.UpdateExchangeRates();
-        if (result.Success)
-            return Ok(result);
-        //return StatusCode(StatusCodes.Status500InternalServerError, result);
-        return BadRequest(result);
     }
 }

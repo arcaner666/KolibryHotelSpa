@@ -107,7 +107,7 @@ public class PersonBl : IPersonBl
     {
         Person person = _personDal.GetById(personDto.PersonId);
         if (person is null)
-            return new ErrorDataResult<PersonDto>(Messages.PersonNotFound);
+            return new ErrorResult(Messages.PersonNotFound);
 
         person.Role = personDto.Role;
         person.Blocked = personDto.Blocked;

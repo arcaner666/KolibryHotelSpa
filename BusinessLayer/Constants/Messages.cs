@@ -28,10 +28,13 @@ public static class Messages
     #region Currency
     public const string CurrenciesNotFound = "CurrenciesNotFound";
     public const string CurrenciesListed = "CurrenciesListed";
-    public const string CurrencyExchangeRatesUpdated = "CurrencyExchangeRatesUpdated";
+    public const string CurrencyExchangeRatesAreUpToDate = "CurrencyExchangeRatesAreUpToDate";
+    public const string CurrencyExchangeRatesCanNotRetrieveFromSource = "CurrencyExchangeRatesCanNotRetrieveFromSource";
     public const string CurrencyExchangeRatesCanNotUpdated = "CurrencyExchangeRatesCanNotUpdated";
+    public const string CurrencyExchangeRatesUpdated = "CurrencyExchangeRatesUpdated";
     public const string CurrencyListedByTitle = "CurrencyListedByTitle";
     public const string CurrencyNotFound = "CurrencyNotFound";
+    public const string CurrencyUpdated = "CurrencyUpdated";
     #endregion
 
     #region PayTr

@@ -29,7 +29,7 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILoggerManager>();
-//app.ConfigureExceptionHandler(logger);
+app.ConfigureExceptionHandler(logger);
 
 if (app.Environment.IsProduction())
     app.UseHsts();
