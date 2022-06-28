@@ -1,14 +1,8 @@
-﻿using AutoMapper;
-using BusinessLayer.Abstract;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.Constants;
 using BusinessLayer.CrossCuttingConcerns.Logging;
 using BusinessLayer.Utilities.Results;
-using DataAccessLayer.Abstract;
-using Entities.DatabaseModels;
 using Entities.DTOs;
-using Newtonsoft.Json.Linq;
-using System.Net;
-using System.Text;
 using System.Xml;
 
 namespace BusinessLayer.Concrete;
