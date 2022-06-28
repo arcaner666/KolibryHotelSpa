@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using BusinessLayer.Abstract;
 using BusinessLayer.Constants;
+using BusinessLayer.CrossCuttingConcerns.Logging;
 using BusinessLayer.Utilities.Results;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NLog;
 using System.Collections.Specialized;
 using System.Net;
 using System.Security.Cryptography;
@@ -21,17 +21,17 @@ public class PayTrBl : IPayTrBl
     public static readonly string merchant_salt = "b4BFeLnMax469SMo";
 
     private readonly IInvoiceBl _invoiceBl;
-    private readonly ILogger _logger;
+    private readonly ILoggerManager _loggerManager;
     private readonly IMapper _mapper;
 
     public PayTrBl(
         IInvoiceBl invoiceBl,
-        ILogger logger,
+        ILoggerManager loggerManager,
         IMapper mapper
     )
     {
         _invoiceBl = invoiceBl;
-        _logger = logger;
+        _loggerManager = loggerManager;
         _mapper = mapper;
     }
 
@@ -164,7 +164,7 @@ public class PayTrBl : IPayTrBl
         // Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
         if (hash.ToString() != token)
         {
-            _logger.Error(
+            _loggerManager.LogError(
                 $"Class: PayTrBl, " +
                 $"Method: SetPaymentResult, " +
                 $"Error: Hashes Did Not Match! " +
@@ -182,7 +182,7 @@ public class PayTrBl : IPayTrBl
         // 2) Eğer sipariş zaten daha önceden onaylandıysa veya iptal edildiyse  echo "OK"; exit; yaparak sonlandırın.
         var searchedInvoice = _invoiceBl.GetById(Convert.ToInt64(merchant_oid));
         if (!searchedInvoice.Success)
-            _logger.Error(
+            _loggerManager.LogError(
                 $"Class: PayTrBl, " +
                 $"Method: SetPaymentResult, " +
                 $"Error: {searchedInvoice.Message} " +
@@ -205,7 +205,7 @@ public class PayTrBl : IPayTrBl
             // 3) 1. ADIM'da gönderilen payment_amount sipariş tutarı taksitli alışveriş yapılması durumunda
             // değişebilir. Güncel tutarı Request.Form['total_amount'] değerinden alarak muhasebe işlemlerinizde kullanabilirsiniz.
 
-            _logger.Info(
+            _loggerManager.LogInfo(
                 $"Class: PayTrBl, " +
                 $"Method: SetPaymentResult, " +
                 $"MerchantOid: {merchant_oid}, " +
@@ -220,7 +220,7 @@ public class PayTrBl : IPayTrBl
             searchedInvoice.Data.Paid = true;
             var updatedInvoice = _invoiceBl.Update(searchedInvoice.Data);
             if (!updatedInvoice.Success)
-                _logger.Error(
+                _loggerManager.LogError(
                     $"Class: PayTrBl, " +
                     $"Method: SetPaymentResult, " +
                     $"Error: {updatedInvoice.Message} " +
@@ -242,7 +242,7 @@ public class PayTrBl : IPayTrBl
             // 2) Eğer ödemenin onaylanmama sebebini kayıt edecekseniz aşağıdaki değerleri kullanabilirsiniz.
             // $post['failed_reason_code'] - başarısız hata kodu
             // $post['failed_reason_msg'] - başarısız hata mesajı
-            _logger.Error(
+            _loggerManager.LogError(
                 $"Class: PayTrBl, " +
                 $"Method: SetPaymentResult, " +
                 $"Error: Payment Failed! " +
@@ -259,8 +259,7 @@ public class PayTrBl : IPayTrBl
             searchedInvoice.Data.Canceled = true;
             var updatedInvoice = _invoiceBl.Update(searchedInvoice.Data);
             if (!updatedInvoice.Success)
-                _logger.Error(updatedInvoice.Message);
-                _logger.Error(
+                _loggerManager.LogError(
                     $"Class: PayTrBl, " +
                     $"Method: SetPaymentResult, " +
                     $"Error: {updatedInvoice.Message} " +
