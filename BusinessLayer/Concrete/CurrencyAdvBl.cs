@@ -40,7 +40,7 @@ public class CurrencyAdvBl : ICurrencyAdvBl
         string sourceLink = "https://openexchangerates.org/api/latest.json?";
 
         // Veri çekebilmek için zorunlu. Sitedeki dashboard üzerinden edinilebilir.
-        string appId = "6f0ee32a2d31410c8ec80c6a03a2b7c2";
+        string appId = "299780a7bcac4bf690461e6ff2b1e101";
 
         using HttpClient client = new();
         var request = new HttpRequestMessage(HttpMethod.Get, sourceLink);
