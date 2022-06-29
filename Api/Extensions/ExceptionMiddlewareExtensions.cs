@@ -18,10 +18,10 @@ public static class ExceptionMiddlewareExtensions
                 var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                 if (contextFeature != null)
                 {
-                    logger.LogError($"Something went wrong: {contextFeature.Error}");
+                    //logger.LogError($"Something went wrong: {contextFeature.Error}");
                     //await context.Response.WriteAsync(
-                    //    new ErrorDetails() 
-                    //    { 
+                    //    new ErrorDetails()
+                    //    {
                     //        StatusCode = context.Response.StatusCode,
                     //        Message = "Internal Server Error.",
                     //    }.ToString());
