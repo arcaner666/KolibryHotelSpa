@@ -9,13 +9,13 @@ namespace Api.Extensions;
 
 public static class ServiceExtensions
 {
-    // Production CORS
+    //Production CORS
     //public static void ConfigureCors(this IServiceCollection services) =>
     //    services.AddCors(options =>
     //    {
     //        options.AddPolicy("CorsPolicy", builder => builder
     //            .WithOrigins(
-    //                "https://www.kolibryhotelspa.com", 
+    //                "https://www.kolibryhotelspa.com",
     //                "https://kolibryhotelspa.com"
     //            )
     //            .AllowAnyMethod()
