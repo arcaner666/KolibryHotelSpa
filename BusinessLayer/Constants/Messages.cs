@@ -3,112 +3,107 @@
 public static class Messages
 {
     #region Authorization
-    public const string AuthorizationCanNotGetClaimsPrincipal = "AuthorizationCanNotGetClaimsPrincipal";
-    public const string AuthorizationDenied = "AuthorizationDenied";
-
+    public const string AuthorizationCanNotGetClaimsPrincipal = "Token'dan kullanıcı yetkileri alınamıyor.";
+    public const string AuthorizationDenied = "Yetkilendirme reddedildi.";
     #endregion
 
     #region ContactForm
-    public const string ContactFormAdded = "ContactFormAdded";
-    public const string ContactFormAlreadyExists = "ContactFormAlreadyExists";
-    public const string ContactFormDeleted = "ContactFormDeleted";
-    public const string ContactFormListedById = "ContactFormListedById";
-    public const string ContactFormNotFound = "ContactFormNotFound";
-    public const string ContactFormsListed = "ContactFormsListed";
-    public const string ContactFormsNotFound = "ContactFormsNotFound";
+    public const string ContactFormAdded = "İletişim formu gönderildi.";
+    public const string ContactFormAlreadyExists = "Bu iletişim bilgileri zaten gönderilmiş.";
+    public const string ContactFormDeleted = "İletişim formu silindi.";
+    public const string ContactFormListedById = "İletişim formu sıra numarasına göre getirildi.";
+    public const string ContactFormNotFound = "İletişim formu bulunamadı.";
+    public const string ContactFormsListed = "İletişim formları listelendi.";
+    public const string ContactFormsNotFound = "İletişim formları bulunamadı.";
     #endregion
 
     #region Claim
-    public const string ClaimListedByTitle = "ClaimListedByTitle";
-    public const string ClaimNotFound = "ClaimNotFound";
-    public const string ClaimsListed = "ClaimsListed";
-    public const string ClaimsNotFound = "ClaimsNotFound";
+    public const string ClaimListedByTitle = "Yetki, yetki adına göre getirildi.";
+    public const string ClaimNotFound = "Yetki bulunamadı.";
+    public const string ClaimsListed = "Yetkiler listelendi.";
+    public const string ClaimsNotFound = "Yetkiler bulunamadı.";
     #endregion
 
     #region Currency
-    public const string CurrenciesNotFound = "CurrenciesNotFound";
-    public const string CurrenciesListed = "CurrenciesListed";
-    public const string CurrencyExchangeRatesAreUpToDate = "CurrencyExchangeRatesAreUpToDate";
-    public const string CurrencyExchangeRatesCanNotRetrieveFromSource = "CurrencyExchangeRatesCanNotRetrieveFromSource";
-    public const string CurrencyExchangeRatesCanNotUpdated = "CurrencyExchangeRatesCanNotUpdated";
-    public const string CurrencyExchangeRatesUpdated = "CurrencyExchangeRatesUpdated";
-    public const string CurrencyListedByTitle = "CurrencyListedByTitle";
-    public const string CurrencyNotFound = "CurrencyNotFound";
-    public const string CurrencyUpdated = "CurrencyUpdated";
+    public const string CurrenciesNotFound = "Dövizler bulunamadı.";
+    public const string CurrenciesListed = "Dövizler listelendi.";
+    public const string CurrencyExchangeRatesAreUpToDate = "Döviz kurları güncel.";
+    public const string CurrencyExchangeRatesCanNotRetrieveFromSource = "Kaynaktan döviz kurları getirilemedi.";
+    public const string CurrencyExchangeRatesCanNotUpdated = "Döviz kurları güncellenemedi.";
+    public const string CurrencyExchangeRatesUpdated = "Döviz kurları güncellendi.";
+    public const string CurrencyListedByTitle = "Dövizler isimlerine göre listelendi.";
+    public const string CurrencyNotFound = "Döviz bulunamadı.";
+    public const string CurrencyUpdated = "Döviz güncellendi.";
     #endregion
 
     #region PayTr
-    public const string PayTrIframeTokenGenerated = "PayTrIframeTokenGenerated";
-    public const string PayTrCanNotGenerateIframeToken = "PayTrCanNotGenerateIframeToken";
+    public const string PayTrIframeTokenGenerated = "PayTR iframe token üretildi.";
     #endregion
 
     #region Person
-    public const string PersonAdded = "PersonAdded";
-    public const string PersonAlreadyExists = "PersonAlreadyExists";
-    public const string PersonDeleted = "PersonDeleted";
-    public const string PersonExtAdded = "PersonExtAdded";
-    public const string PersonExtDeleted = "PersonExtDeleted";
-    public const string PersonExtsListed = "PersonExtsListed";
-    public const string PersonExtsListedById = "PersonExtsListedById";
-    public const string PersonExtUpdated = "PersonExtUpdated";
-    public const string PersonListedByEmail = "PersonListedByEmail";
-    public const string PersonListedById = "PersonListedById";
-    public const string PersonListedByPhone = "PersonListedByPhone";
-    public const string PersonLoggedIn = "PersonLoggedIn";
-    public const string PersonLoggedOut = "PersonLoggedOut";
-    public const string PersonNotFound = "PersonNotFound";
-    public const string PersonTokenExpired = "PersonTokenExpired";
-    public const string PersonTokenInvalid = "PersonTokenInvalid";
-    public const string PersonTokensRefreshed = "PersonTokensRefreshed";
-    public const string PersonUpdated = "PersonUpdated";
-    public const string PersonWrongPassword = "PersonWrongPassword";
+    public const string PersonAdded = "Kullanıcı eklendi.";
+    public const string PersonAlreadyExists = "Kullanıcı zaten sistemde kayıtlı.";
+    public const string PersonDeleted = "Kullanıcı silindi.";
+    public const string PersonExtAdded = "Kullanıcı eklendi.";
+    public const string PersonExtDeleted = "Kullanıcı silindi.";
+    public const string PersonExtsListed = "Kullanıcılar listelendi.";
+    public const string PersonExtUpdated = "Kullanıcı güncellendi.";
+    public const string PersonListedByEmail = "Kullanıcı e-posta adresine göre getirildi.";
+    public const string PersonListedById = "Kullanıcı sıra numarasına göre getirildi.";
+    public const string PersonListedByPhone = "Kullanıcı telefon numarasına göre getirildi.";
+    public const string PersonLoggedIn = "Giriş Başarılı.";
+    public const string PersonLoggedOut = "Çıkış başarılı.";
+    public const string PersonNotFound = "Kullanıcı bulunamadı.";
+    public const string PersonTokenExpired = "Oturum anahtarının süresi doldu.";
+    public const string PersonTokenInvalid = "Oturum anahtarı geçersiz.";
+    public const string PersonTokensRefreshed = "Oturum anahtarları yenilendi.";
+    public const string PersonUpdated = "Kullanıcı güncellendi.";
+    public const string PersonWrongPassword = "Kullanıcı adı veya şifre yanlış.";
     #endregion
 
     #region PersonClaim
-    public const string PersonClaimAdded = "PersonClaimAdded";
-    public const string PersonClaimAlreadyExists = "PersonClaimAlreadyExists";
-    public const string PersonClaimDeleted = "PersonClaimDeleted";
-    public const string PersonClaimExtsListedByPersonId = "PersonClaimExtsListedByPersonId";
-    public const string PersonClaimListedById = "PersonClaimListedById";
-    public const string PersonClaimNotFound = "PersonClaimNotFound";
-    public const string PersonClaimsNotFound = "PersonClaimsNotFound";
+    public const string PersonClaimAdded = "Kullanıcıya yetki atandı.";
+    public const string PersonClaimAlreadyExists = "Kullanıcı zaten bu yetkiye sahip.";
+    public const string PersonClaimDeleted = "Kullanıcının yetkisi silindi.";
+    public const string PersonClaimExtsListedByPersonId = "Kullanıcıların yetkileri kişi sıra numarasına göre listelendi.";
+    public const string PersonClaimListedById = "Kullanıcının yetkisi sıra numarasına göre getirildi.";
+    public const string PersonClaimNotFound = "Kullanıcı yetkisi bulunamadı.";
+    public const string PersonClaimsNotFound = "Kullanıcı yetkileri bulunamadı.";
     #endregion
 
     #region Invoice
-    public const string InvoiceAdded = "InvoiceAdded";
-    public const string InvoiceAlreadyExists = "InvoiceAlreadyExists";
-    public const string InvoiceDeleted = "InvoiceDeleted";
-    public const string InvoiceExtAdded = "InvoiceExtAdded";
-    public const string InvoiceExtDeleted = "InvoiceExtDeleted";
-    public const string InvoiceExtsListed = "InvoiceExtsListed";
-    public const string InvoiceExtsListedById = "InvoiceExtsListedById";
-    public const string InvoiceExtUpdated = "InvoiceExtUpdated";
-    public const string InvoiceListedById = "InvoiceListedById";
-    public const string InvoiceListedByInvoiceId = "InvoiceListedByInvoiceId";
-    public const string InvoiceNotFound = "InvoiceNotFound";
-    public const string InvoicesNotFound = "InvoicesNotFound";
-    public const string InvoiceUpdated = "InvoiceUpdated";
+    public const string InvoiceAdded = "Rezervasyon tamamlandı.";
+    public const string InvoiceAlreadyExists = "Zaten böyle bir rezervasyon yapılmış.";
+    public const string InvoiceDeleted = "Rezervasyon silindi.";
+    public const string InvoiceExtAdded = "Rezervasyon tamamlandı.";
+    public const string InvoiceExtDeleted = "Rezervasyon silindi.";
+    public const string InvoiceExtsListed = "Rezervasyonlar listelendi.";
+    public const string InvoiceExtUpdated = "Rezervasyon güncellendi.";
+    public const string InvoiceListedById = "Rezervasyon getirildi.";
+    public const string InvoiceNotFound = "Rezervasyon bulunamadı.";
+    public const string InvoicesNotFound = "Rezervasyonlar bulunamadı.";
+    public const string InvoiceUpdated = "Rezervasyon güncellendi.";
     #endregion
 
     #region InvoiceDetail
-    public const string InvoiceDetailAdded = "InvoiceDetailAdded";
-    public const string InvoiceDetailAlreadyExists = "InvoiceDetailAlreadyExists";
-    public const string InvoiceDetailDeleted = "InvoiceDetailDeleted";
-    public const string InvoiceDetailListedById = "InvoiceDetailListedById";
-    public const string InvoiceDetailNotFound = "InvoiceDetailNotFound";
-    public const string InvoiceDetailsListedByInvoiceId = "InvoiceDetailsListedByInvoiceId";
-    public const string InvoiceDetailsNotFound = "InvoiceDetailsNotFound";
-    public const string InvoiceDetailUpdated = "InvoiceDetailUpdated";
+    public const string InvoiceDetailAdded = "Rezervasyon detay satırı eklendi.";
+    public const string InvoiceDetailAlreadyExists = "İlgili rezervasyonun detay satırı zaten mevcut.";
+    public const string InvoiceDetailDeleted = "Rezervasyon detay satırı silindi.";
+    public const string InvoiceDetailListedById = "Rezervasyon detay satırı sıra numarasına göre getirildi.";
+    public const string InvoiceDetailNotFound = "Rezervasyon detay satırı bulunamadı.";
+    public const string InvoiceDetailsListedByInvoiceId = "Rezervasyon detay satırları rezervasyon sıra numarasına göre getirildi.";
+    public const string InvoiceDetailsNotFound = "Rezervasyon detay satırları bulunamadı.";
+    public const string InvoiceDetailUpdated = "Rezervasyon detay satırları güncellendi.";
     #endregion
 
     #region Suite
-    public const string SuiteAdded = "SuiteAdded";
-    public const string SuiteAlreadyExists = "SuiteAlreadyExists";
-    public const string SuiteDeleted = "SuiteDeleted";
-    public const string SuiteListedById = "SuiteListedById";
-    public const string SuiteNotFound = "SuiteNotFound";
-    public const string SuitesListed = "SuitesListed";
-    public const string SuitesNotFound = "SuitesNotFound";
-    public const string SuiteUpdated = "SuiteUpdated";
+    public const string SuiteAdded = "Oda eklendi.";
+    public const string SuiteAlreadyExists = "Oda zaten mevcut.";
+    public const string SuiteDeleted = "Oda silindi.";
+    public const string SuiteListedById = "Oda sıra numarasına göre listelendi.";
+    public const string SuiteNotFound = "Oda bulunamadı.";
+    public const string SuitesListed = "Odalar listelendi.";
+    public const string SuitesNotFound = "Odalar bulunamadı.";
+    public const string SuiteUpdated = "Oda güncellendi.";
     #endregion
 }

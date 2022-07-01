@@ -9,5 +9,14 @@ public interface IInvoiceDal
     void Delete(long id);
     Invoice GetById(long id);
     List<InvoiceExt> GetExts();
+    Invoice GetIfAlreadyExist(
+        byte currencyId,
+        string buyerNameSurname,
+        string buyerEmail,
+        string buyerPhone,
+        string buyerAddress,
+        string buyerIp,
+        DateTimeOffset reservationStartDate
+    );
     void Update(Invoice invoice);
 }

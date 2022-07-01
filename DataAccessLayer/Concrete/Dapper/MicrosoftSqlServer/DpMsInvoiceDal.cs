@@ -150,6 +150,65 @@ public class DpMsInvoiceDal : IInvoiceDal
         return connection.Query<InvoiceExt>(sql).ToList();
     }
 
+    public Invoice GetIfAlreadyExist(
+        byte currencyId,
+        string buyerNameSurname,
+        string buyerEmail,
+        string buyerPhone,
+        string buyerAddress,
+        string buyerIp,
+        DateTimeOffset reservationStartDate
+    )
+    {
+        using var connection = _context.CreateConnection();
+        var sql = "SELECT"
+            + " InvoiceId,"
+            + " CurrencyId,"
+            + " BuyerNameSurname,"
+            + " BuyerEmail,"
+            + " BuyerPhone,"
+            + " BuyerAddress,"
+            + " BuyerIp,"
+            + " ReservationStartDate,"
+            + " ReservationEndDate,"
+            + " Adult,"
+            + " Child,"
+            + " ChildAge1,"
+            + " ChildAge2,"
+            + " ChildAge3,"
+            + " ChildAge4,"
+            + " ChildAge5,"
+            + " ChildAge6,"
+            + " Title,"
+            + " NetPrice,"
+            + " Vat,"
+            + " TotalVat,"
+            + " TotalPrice,"
+            + " Paid,"
+            + " Canceled,"
+            + " CreatedAt,"
+            + " UpdatedAt"
+            + " FROM Invoice"
+            + " WHERE"
+            + " CurrencyId = @CurrencyId AND"
+            + " BuyerNameSurname = @BuyerNameSurname AND"
+            + " BuyerEmail = @BuyerEmail AND"
+            + " BuyerPhone = @BuyerPhone AND"
+            + " BuyerAddress = @BuyerAddress AND"
+            + " BuyerIp = @BuyerIp AND"
+            + " ReservationStartDate = @ReservationStartDate";
+        return connection.Query<Invoice>(sql, new 
+        {
+            @CurrencyId = currencyId,
+            @BuyerNameSurname = buyerNameSurname,
+            @BuyerEmail = buyerEmail,
+            @BuyerPhone = buyerPhone,
+            @BuyerAddress = buyerAddress,
+            @BuyerIp = buyerIp,
+            @ReservationStartDate = reservationStartDate,
+        }).SingleOrDefault();
+    }
+
     public void Update(Invoice invoice)
     {
         using var connection = _context.CreateConnection();

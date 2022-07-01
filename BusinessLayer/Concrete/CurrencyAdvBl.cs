@@ -123,7 +123,8 @@ public class CurrencyAdvBl : ICurrencyAdvBl
         XmlDocument xmlDocument = new();
         xmlDocument.Load(xmlStream);
 
-        _loggerManager.LogInfo(xmlDocument.OuterXml);
+        // Gelen XML dosyasını text olarak basmak için Production'da gerek yok.
+        //_loggerManager.LogInfo(xmlDocument.OuterXml);
 
         foreach (XmlNode node in xmlDocument.SelectNodes("Tarih_Date")[0].ChildNodes)
         {

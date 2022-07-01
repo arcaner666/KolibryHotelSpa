@@ -25,6 +25,18 @@ public class InvoiceBl : IInvoiceBl
 
     public IDataResult<InvoiceDto> Add(InvoiceDto invoiceDto)
     {
+        Invoice searchedInvoice = _invoiceDal.GetIfAlreadyExist(
+            invoiceDto.CurrencyId,
+            invoiceDto.BuyerNameSurname,
+            invoiceDto.BuyerEmail,
+            invoiceDto.BuyerPhone,
+            invoiceDto.BuyerAddress,
+            invoiceDto.BuyerIp,
+            invoiceDto.ReservationStartDate
+        );
+        if (searchedInvoice is not null)
+            return new ErrorDataResult<InvoiceDto>(Messages.InvoiceAlreadyExists);
+
         var addedInvoice = _mapper.Map<Invoice>(invoiceDto);
 
         addedInvoice.Paid = false;

@@ -142,7 +142,7 @@ public class PayTrBl : IPayTrBl
             return new SuccessDataResult<PayTrIframeDto>(payTrIframeDto, Messages.PayTrIframeTokenGenerated);
         }
 
-        return new ErrorDataResult<PayTrIframeDto>("PAYTR IFRAME failed. reason:" + json.reason + ""); ;
+        return new ErrorDataResult<PayTrIframeDto>("PAYTR IFRAME failed. reason:" + json.reason + "");
     }
 
     public string SetPaymentResult(IFormCollection form)
@@ -182,6 +182,7 @@ public class PayTrBl : IPayTrBl
         // 2) Eğer sipariş zaten daha önceden onaylandıysa veya iptal edildiyse  echo "OK"; exit; yaparak sonlandırın.
         var searchedInvoice = _invoiceBl.GetById(Convert.ToInt64(merchant_oid));
         if (!searchedInvoice.Success)
+        {
             _loggerManager.LogError(
                 $"Class: PayTrBl, " +
                 $"Method: SetPaymentResult, " +
@@ -192,6 +193,9 @@ public class PayTrBl : IPayTrBl
                 $"Hash: {hash}, " +
                 $"TestMode: {test_mode}, " +
                 $"PaymentType: {payment_type}");
+            return "OK";
+        }
+
         if (searchedInvoice.Data.Paid == true || searchedInvoice.Data.Canceled == true) 
             return "OK";
 
