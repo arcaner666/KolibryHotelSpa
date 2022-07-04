@@ -6,8 +6,8 @@ public class PayTrIframeDto
     public string Email { get; set; }
     public string Phone { get; set; }
     public string Address { get; set; }
-    public int PaymentAmount { get; set; }
-    public int TotalAmount { get; set; }
+    public decimal PaymentAmount { get; set; }
+    public decimal TotalAmount { get; set; }
     public List<InvoiceDetailDto> UserBasket { get; set; }
     public string MerchantOid { get; set; }
     public string MerchantOkUrl { get; set; }

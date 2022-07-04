@@ -10,27 +10,27 @@ namespace Api.Extensions;
 public static class ServiceExtensions
 {
     //Production CORS
-    //public static void ConfigureCors(this IServiceCollection services) =>
-    //    services.AddCors(options =>
-    //    {
-    //        options.AddPolicy("CorsPolicy", builder => builder
-    //            .WithOrigins(
-    //                "https://www.kolibryhotelspa.com",
-    //                "https://kolibryhotelspa.com"
-    //            )
-    //            .AllowAnyMethod()
-    //            .AllowAnyHeader());
-    //    });
-
-    // Development CORS
     public static void ConfigureCors(this IServiceCollection services) =>
         services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy", builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
+                .WithOrigins(
+                    "https://www.kolibryhotelspa.com",
+                    "https://kolibryhotelspa.com"
+                )
+                .WithMethods("GET", "POST", "DELETE")
                 .AllowAnyHeader());
         });
+
+    // Development CORS
+    //public static void ConfigureCors(this IServiceCollection services) =>
+    //    services.AddCors(options =>
+    //    {
+    //        options.AddPolicy("CorsPolicy", builder => builder
+    //            .AllowAnyOrigin()
+    //            .AllowAnyMethod()
+    //            .AllowAnyHeader());
+    //    });
 
     public static void ConfigureFileTransferOptions(this IServiceCollection services, IConfiguration configuration)
     {

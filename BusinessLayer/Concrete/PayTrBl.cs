@@ -43,7 +43,7 @@ public class PayTrBl : IPayTrBl
         string emailstr = payTrIframeDto.Email;
         //
         // Tahsil edilecek tutar. 9.99 için 9.99 * 100 = 999 gönderilmelidir.
-        int payment_amountstr = payTrIframeDto.PaymentAmount * 100;
+        int payment_amountstr = Convert.ToInt32(payTrIframeDto.PaymentAmount * 100);
         //
         // Sipariş numarası: Her işlemde benzersiz olmalıdır!! Bu bilgi bildirim sayfanıza yapılacak bildirimde geri gönderilir.
         string merchant_oid = payTrIframeDto.MerchantOid;

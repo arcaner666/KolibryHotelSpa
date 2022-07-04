@@ -18,7 +18,7 @@ namespace Entities.DatabaseModels
         public string Role { get; set; }
         public bool Blocked { get; set; }
         public string RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
+        public DateTimeOffset RefreshTokenExpiryTime { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
 

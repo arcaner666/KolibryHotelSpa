@@ -70,6 +70,30 @@ public class DpMsPersonDal : IPersonDal
         return connection.Query<Person>(sql, new { @Email = email }).SingleOrDefault();
     }
 
+    public Person GetByEmailOrPhone(string email, string phone)
+    {
+        using var connection = _context.CreateConnection();
+        var sql = "SELECT"
+            + " PersonId,"
+            + " Email,"
+            + " Phone,"
+            + " PasswordHash,"
+            + " PasswordSalt,"
+            + " Role,"
+            + " Blocked,"
+            + " RefreshToken,"
+            + " RefreshTokenExpiryTime,"
+            + " CreatedAt,"
+            + " UpdatedAt"
+            + " FROM Person"
+            + " WHERE Email = @Email"
+            + " OR Phone = @Phone";
+        return connection.Query<Person>(sql, new { 
+            @Email = email,
+            @Phone = phone,
+        }).SingleOrDefault();
+    }
+
     public Person GetById(long id)
     {
         using var connection = _context.CreateConnection();

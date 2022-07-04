@@ -25,7 +25,7 @@ public class PersonBl : IPersonBl
 
     public IDataResult<PersonDto> Add(PersonDto personDto)
     {
-        Person searchedPerson = _personDal.GetByEmail(personDto.Email);
+        Person searchedPerson = _personDal.GetByEmailOrPhone(personDto.Email, personDto.Phone);
         if (searchedPerson is not null)
             return new ErrorDataResult<PersonDto>(Messages.PersonAlreadyExists);
 
@@ -37,7 +37,7 @@ public class PersonBl : IPersonBl
         addedPerson.PasswordSalt = passwordSalt;
         addedPerson.Blocked = false;
         addedPerson.RefreshToken = "";
-        addedPerson.RefreshTokenExpiryTime = DateTime.Now;
+        addedPerson.RefreshTokenExpiryTime = DateTimeOffset.Now;
         addedPerson.CreatedAt = DateTimeOffset.Now;
         addedPerson.UpdatedAt = DateTimeOffset.Now;
         long id = _personDal.Add(addedPerson);

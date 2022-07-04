@@ -61,8 +61,10 @@ public class CurrencyAdvBl : ICurrencyAdvBl
 
         // Zamansal hataları yakalamak için test satırı
         //return new ErrorResult($"DateTimeOffset.Now: {DateTimeOffset.Now.ToUnixTimeSeconds()} | UpdatedAt: {getCurrenciesResult.Data[0].UpdatedAt.ToUnixTimeSeconds()} | Difference: {DateTimeOffset.Now.ToUnixTimeSeconds() - getCurrenciesResult.Data[0].UpdatedAt.ToUnixTimeSeconds()}");
-        if (DateTimeOffset.Now.ToUnixTimeSeconds() - getCurrenciesResult.Data.Find(c => c.AlphabeticCode == "USD").UpdatedAt.ToUnixTimeSeconds() < 43200) // 12 saatte bir
-            return new SuccessResult(Messages.CurrencyExchangeRatesAreUpToDate);
+        
+        // Şimdilik her seferinde döviz kurlarını çekmeliyim. O sebeple kapalı.
+        //if (DateTimeOffset.Now.ToUnixTimeSeconds() - getCurrenciesResult.Data.Find(c => c.AlphabeticCode == "USD").UpdatedAt.ToUnixTimeSeconds() < 60) // 12 saatte bir
+        //    return new SuccessResult(Messages.CurrencyExchangeRatesAreUpToDate);
 
         // Gelen verinin formatı aşağıdaki gibidir.
         //<? xml version = "1.0" encoding = "UTF-8" ?>
@@ -131,7 +133,7 @@ public class CurrencyAdvBl : ICurrencyAdvBl
             if (node.Attributes["Kod"].Value == "USD")
             {
                 var filteredCurrency = getCurrenciesResult.Data.Find(c => c.AlphabeticCode == "USD");
-                filteredCurrency.ExchangeRate = Convert.ToDecimal(node["ForexSelling"].InnerText);
+                filteredCurrency.ExchangeRate = Convert.ToDecimal("0" + node["ForexSelling"].InnerText.Replace(".", ","));
                 var updateCurrencyResult = _currencyBl.Update(filteredCurrency);
                 if (!updateCurrencyResult.Success)
                     return new ErrorResult(Messages.CurrencyExchangeRatesCanNotUpdated);
@@ -140,7 +142,7 @@ public class CurrencyAdvBl : ICurrencyAdvBl
             if (node.Attributes["Kod"].Value == "EUR")
             {
                 var filteredCurrency = getCurrenciesResult.Data.Find(c => c.AlphabeticCode == "EUR");
-                filteredCurrency.ExchangeRate = Convert.ToDecimal(node["ForexSelling"].InnerText);
+                filteredCurrency.ExchangeRate = Convert.ToDecimal("0" + node["ForexSelling"].InnerText.Replace(".", ","));
                 var updateCurrencyResult = _currencyBl.Update(filteredCurrency);
                 if (!updateCurrencyResult.Success)
                     return new ErrorResult(Messages.CurrencyExchangeRatesCanNotUpdated);

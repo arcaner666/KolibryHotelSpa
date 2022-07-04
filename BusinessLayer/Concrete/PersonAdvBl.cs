@@ -151,7 +151,7 @@ public class PersonAdvBl : IPersonAdvBl
             return getPersonResult;
         if (getPersonResult.Data.RefreshToken != personExtDto.RefreshToken)
             return new ErrorResult(Messages.PersonTokenInvalid);
-        if (getPersonResult.Data.RefreshTokenExpiryTime <= DateTime.Now)
+        if (getPersonResult.Data.RefreshTokenExpiryTime <= DateTimeOffset.Now)
             return new ErrorResult(Messages.PersonTokenExpired);
 
         string newAccessToken = _tokenHelper.GenerateAccessToken(getPersonResult.Data.PersonId, personClaimExtDtos);
@@ -174,7 +174,8 @@ public class PersonAdvBl : IPersonAdvBl
         string refreshToken = _tokenHelper.GenerateRefreshToken();
 
         personDto.RefreshToken = refreshToken;
-        personDto.RefreshTokenExpiryTime = DateTime.Now.AddSeconds(personExtDto.RefreshTokenDuration);
+        //personDto.RefreshTokenExpiryTime = DateTime.Now.AddSeconds(personExtDto.RefreshTokenDuration);
+        personDto.RefreshTokenExpiryTime = DateTimeOffset.Now.AddSeconds(30);
         personDto.UpdatedAt = DateTimeOffset.Now;
         var updatePersonResult = _personBl.Update(personDto);
         if (!updatePersonResult.Success)
