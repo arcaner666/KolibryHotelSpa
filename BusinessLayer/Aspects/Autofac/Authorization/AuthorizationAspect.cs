@@ -1,20 +1,22 @@
 ﻿using BusinessLayer.Constants;
 using BusinessLayer.Extensions;
 using BusinessLayer.Utilities.Interceptors;
+using BusinessLayer.Utilities.IoC;
 using Castle.DynamicProxy;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BusinessLayer.Aspects.Autofac.Authorization;
 
 public class AuthorizationAspect : MethodInterception
 {
     private readonly string[] _roles;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private IHttpContextAccessor _httpContextAccessor;
 
-    public AuthorizationAspect(string roles, IHttpContextAccessor httpContextAccessor)
+    public AuthorizationAspect(string roles)
     {
         _roles = roles.Split(',');
-        _httpContextAccessor = httpContextAccessor;
+        _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
     }
 
     protected override void OnBefore(IInvocation invocation)

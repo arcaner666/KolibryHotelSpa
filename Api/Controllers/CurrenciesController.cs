@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using BusinessLayer.Aspects.Autofac.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -19,6 +20,7 @@ public class CurrenciesController : ControllerBase
         _currencyBl = currencyBl;
     }
 
+    [AuthorizationAspect("Admin")]
     [HttpGet("getall")]
     public IActionResult GetAll()
     {

@@ -6,6 +6,9 @@ using BusinessLayer.CrossCuttingConcerns.Logging;
 using BusinessLayer.DependencyResolvers.Autofac;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
+using BusinessLayer.Extensions;
+using BusinessLayer.DependencyResolvers;
+using BusinessLayer.Utilities.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,10 @@ builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(BusinessLayerReference));
+builder.Services.ConfigureDependencyResolvers(new ICoreModule[]
+{
+    new CoreModule()
+});
 
 builder.Services.AddControllers();
 

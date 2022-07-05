@@ -174,8 +174,7 @@ public class PersonAdvBl : IPersonAdvBl
         string refreshToken = _tokenHelper.GenerateRefreshToken();
 
         personDto.RefreshToken = refreshToken;
-        //personDto.RefreshTokenExpiryTime = DateTime.Now.AddSeconds(personExtDto.RefreshTokenDuration);
-        personDto.RefreshTokenExpiryTime = DateTimeOffset.Now.AddSeconds(30);
+        personDto.RefreshTokenExpiryTime = DateTime.Now.AddSeconds(personExtDto.RefreshTokenDuration);
         personDto.UpdatedAt = DateTimeOffset.Now;
         var updatePersonResult = _personBl.Update(personDto);
         if (!updatePersonResult.Success)

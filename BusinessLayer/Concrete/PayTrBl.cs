@@ -75,7 +75,6 @@ public class PayTrBl : IPayTrBl
         List<InvoiceDetailDto> user_basket = payTrIframeDto.UserBasket;
         /* ############################################################################################ */
 
-
         // İşlem zaman aşımı süresi - dakika cinsinden
         string timeout_limit = "30";
         //

@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Utilities.Security.Encryption;
+﻿using BusinessLayer.Utilities.IoC;
+using BusinessLayer.Utilities.Security.Encryption;
 using BusinessLayer.Utilities.Security.JWT;
 using Entities.ConfigurationModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -63,5 +64,14 @@ public static class ServiceExtensions
                 IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
             };
         });
+    }
+
+    public static IServiceCollection ConfigureDependencyResolvers(this IServiceCollection services, ICoreModule[] modules)
+    {
+        foreach (var module in modules)
+        {
+            module.Load(services);
+        }
+        return ServiceTool.Create(services);
     }
 }
