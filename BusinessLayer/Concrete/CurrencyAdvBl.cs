@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using BusinessLayer.Aspects.Autofac.Logging;
 using BusinessLayer.Constants;
 using BusinessLayer.CrossCuttingConcerns.Logging;
 using BusinessLayer.Utilities.Results;
@@ -32,6 +33,12 @@ public class CurrencyAdvBl : ICurrencyAdvBl
             return getCurrenciesResult;
 
         return new SuccessDataResult<List<CurrencyDto>>(getCurrenciesResult.Data, Messages.CurrenciesListed);
+    }
+
+    [LoggingAspect(typeof(ILoggerManager))]
+    public IResult TestLogAspect(int number, string str)
+    {
+        return new SuccessResult("TestLogAspect worked!");
     }
 
     // https://openexchangerates.org/ Ücretsiz planda aylık 1000 request limiti var ve referans döviz USD.

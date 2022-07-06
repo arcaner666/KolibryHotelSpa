@@ -6,13 +6,30 @@ namespace BusinessLayer.Aspects.Autofac.Logging;
 
 public class LoggingAspect : MethodInterception
 {
-    private readonly ILoggerManager _logger;
-    public LoggingAspect(ILoggerManager logger)
+    private readonly Type _loggerManagerType;
+    public LoggingAspect(Type loggerManagerType)
     {
-        _logger = logger;
+        if (!typeof(ILoggerManager).IsAssignableFrom(loggerManagerType))
+        {
+            throw new Exception("Bu bir loglama sınıfı değil!");
+        }
+
+        _loggerManagerType = loggerManagerType;
     }
-    protected override void OnException(IInvocation invocation, Exception exception) 
+
+    public override void OnBefore(IInvocation invocation)
     {
-        _logger.LogError(exception.Message);
+        var loggerManager = (ILoggerManager)Activator.CreateInstance(_loggerManagerType);
+        var methodParameterTypes = invocation.Method.GetGenericArguments()
+        var parameters = invocation.Arguments.Where(t => t.GetType() == entityType);
+        if (loggerManager.IsInfoEnabled)
+        {
+            loggerManager.LogError();
+        }
+    }
+    public override void OnException(IInvocation invocation, Exception exception) 
+    {
+        var _loggerManager = (ILoggerManager)Activator.CreateInstance(_loggerManagerType);
+        _loggerManager.LogError(exception.Message);
     }
 }

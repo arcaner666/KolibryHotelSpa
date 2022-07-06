@@ -1,9 +1,15 @@
 ﻿namespace BusinessLayer.CrossCuttingConcerns.Logging;
 
-public interface ILoggerManager 
-{ 
-    void LogInfo(string message); 
-    void LogWarn(string message); 
-    void LogDebug(string message); 
-    void LogError(string message); 
+public interface ILoggerManager
+{
+    bool IsDebugEnabled { get; }
+    bool IsErrorEnabled { get; }
+    bool IsInfoEnabled { get; }
+    bool IsWarnEnabled { get; }
+    bool IsFatalEnabled { get; }
+    void LogDebug(object message);
+    void LogError(object message); 
+    void LogInfo(object message); 
+    void LogWarn(object message);
+    void LogFatal(object message);
 }

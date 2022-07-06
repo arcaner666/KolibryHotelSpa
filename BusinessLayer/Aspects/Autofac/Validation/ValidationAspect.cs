@@ -12,7 +12,7 @@ public class ValidationAspect : MethodInterception
     {
         if (!typeof(IValidator).IsAssignableFrom(validatorType))
         {
-            throw new System.Exception("Bu bir doğrulama sınıfı değil!");
+            throw new Exception("Bu bir doğrulama sınıfı değil!");
         }
 
         _validatorType = validatorType;

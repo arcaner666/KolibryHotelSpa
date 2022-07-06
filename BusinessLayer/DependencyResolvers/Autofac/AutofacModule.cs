@@ -3,6 +3,7 @@ using Autofac.Extras.DynamicProxy;
 using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using BusinessLayer.CrossCuttingConcerns.Logging;
+using BusinessLayer.CrossCuttingConcerns.Logging.NLog;
 using BusinessLayer.Utilities.Interceptors;
 using BusinessLayer.Utilities.Security.Cryptography;
 using BusinessLayer.Utilities.Security.JWT;
