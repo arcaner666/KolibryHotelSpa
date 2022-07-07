@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.Abstract;
+using BusinessLayer.Aspects.Autofac.Logging;
+using BusinessLayer.CrossCuttingConcerns.Logging.NLog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -52,7 +54,8 @@ public class CurrenciesController : ControllerBase
     //    return Ok(result);
     //}
 
-    [HttpPost("testlogaspect")]
+    [LoggingAspect(typeof(LoggerManager))]
+    [HttpGet("testlogaspect/{number}/{str}")]
     public IActionResult TestLogAspect(int number, string str)
     {
         var result = _currencyAdvBl.TestLogAspect(number, str);

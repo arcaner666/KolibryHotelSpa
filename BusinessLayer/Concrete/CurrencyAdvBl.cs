@@ -2,6 +2,7 @@
 using BusinessLayer.Aspects.Autofac.Logging;
 using BusinessLayer.Constants;
 using BusinessLayer.CrossCuttingConcerns.Logging;
+using BusinessLayer.CrossCuttingConcerns.Logging.NLog;
 using BusinessLayer.Utilities.Results;
 using Entities.DTOs;
 using System.Xml;
@@ -35,7 +36,7 @@ public class CurrencyAdvBl : ICurrencyAdvBl
         return new SuccessDataResult<List<CurrencyDto>>(getCurrenciesResult.Data, Messages.CurrenciesListed);
     }
 
-    [LoggingAspect(typeof(ILoggerManager))]
+
     public IResult TestLogAspect(int number, string str)
     {
         return new SuccessResult("TestLogAspect worked!");

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.CrossCuttingConcerns.Logging;
+using BusinessLayer.CrossCuttingConcerns.Logging.NLog;
 using BusinessLayer.Utilities.Interceptors;
 using Castle.DynamicProxy;
 
@@ -9,7 +10,7 @@ public class LoggingAspect : MethodInterception
     private readonly Type _loggerManagerType;
     public LoggingAspect(Type loggerManagerType)
     {
-        if (!typeof(ILoggerManager).IsAssignableFrom(loggerManagerType))
+        if (!typeof(LoggerManager).IsAssignableFrom(loggerManagerType))
         {
             throw new Exception("Bu bir loglama sınıfı değil!");
         }
@@ -17,19 +18,26 @@ public class LoggingAspect : MethodInterception
         _loggerManagerType = loggerManagerType;
     }
 
-    public override void OnBefore(IInvocation invocation)
+    protected override void OnBefore(IInvocation invocation)
     {
-        var loggerManager = (ILoggerManager)Activator.CreateInstance(_loggerManagerType);
-        var methodParameterTypes = invocation.Method.GetGenericArguments()
-        var parameters = invocation.Arguments.Where(t => t.GetType() == entityType);
-        if (loggerManager.IsInfoEnabled)
+        var loggerManager = (LoggerManager)Activator.CreateInstance(_loggerManagerType);
+        var logMethodParameters = invocation.Method.GetParameters().Select((p, i) => new LogMethodParameter()
         {
-            loggerManager.LogError();
-        }
+            Name = p.Name,
+            Type = p.ParameterType.Name,
+            Value = invocation.GetArgumentValue(i),
+        });
+        //loggerManager.LogInfo(logMethodParameters);
+        loggerManager.LogInfo(invocation.GetArgumentValue(1));
+        //var parameters = invocation.Arguments.Where(t => t.GetType() == entityType);
+        //if (loggerManager.IsInfoEnabled)
+        //{
+        //}
     }
-    public override void OnException(IInvocation invocation, Exception exception) 
-    {
-        var _loggerManager = (ILoggerManager)Activator.CreateInstance(_loggerManagerType);
-        _loggerManager.LogError(exception.Message);
-    }
+
+    //protected override void OnException(IInvocation invocation, Exception exception) 
+    //{
+    //    var loggerManager = (ILoggerManager)Activator.CreateInstance(_loggerManagerType);
+    //    loggerManager.LogError(exception.Message);
+    //}
 }
