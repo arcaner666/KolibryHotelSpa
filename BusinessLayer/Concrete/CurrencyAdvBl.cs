@@ -36,12 +36,6 @@ public class CurrencyAdvBl : ICurrencyAdvBl
         return new SuccessDataResult<List<CurrencyDto>>(getCurrenciesResult.Data, Messages.CurrenciesListed);
     }
 
-
-    public IResult TestLogAspect(int number, string str)
-    {
-        return new SuccessResult("TestLogAspect worked!");
-    }
-
     // https://openexchangerates.org/ Ücretsiz planda aylık 1000 request limiti var ve referans döviz USD.
     private IResult UpdateExchangeRatesFromOpenExchangeRates()
     {

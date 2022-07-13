@@ -29,38 +29,4 @@ public class CurrenciesController : ControllerBase
             return Ok(result);
         return StatusCode(StatusCodes.Status500InternalServerError, result);
     }
-
-    //[HttpPost("logerrormethod")]
-    //public IActionResult LogErrorMethod(int number)
-    //{
-    //    LogMethodParameter logMethodParameter = new()
-    //    {
-    //        Name = "number",
-    //        Type = typeof(int).Name,
-    //        Value = number.ToString(),
-    //    };
-    //    LogDetail logDetail = new()
-    //    {
-    //        FullName = "Api.Controllers.CurrenciesController",
-    //        MethodName = "LogErrorMethod",
-    //        MethodParameters = new List<LogMethodParameter>() 
-    //        { 
-    //            logMethodParameter 
-    //        },
-    //    };
-
-    //    _loggerManager.LogError(logDetail);
-    //    var result = "OK";
-    //    return Ok(result);
-    //}
-
-    [LoggingAspect(typeof(LoggerManager))]
-    [HttpGet("testlogaspect/{number}/{str}")]
-    public IActionResult TestLogAspect(int number, string str)
-    {
-        var result = _currencyAdvBl.TestLogAspect(number, str);
-        if (result.Success)
-            return Ok(result);
-        return StatusCode(StatusCodes.Status500InternalServerError, result);
-    }
 }
